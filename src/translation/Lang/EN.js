@@ -47,7 +47,7 @@ export const en = {
     quantity: "Quantity",
     size: "Size",
     options: "Addons",
-    currency: "SAR",
+    currency: "EGP",
     kcal: "kcal",
   },
   customerData: {

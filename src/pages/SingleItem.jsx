@@ -1,33 +1,33 @@
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { IoAddCircleOutline, IoRemoveCircleOutline } from 'react-icons/io5'
-import { IoMdAddCircle, IoIosArrowBack } from 'react-icons/io'
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5";
+import { IoMdAddCircle, IoIosArrowBack } from "react-icons/io";
 
-import useDarkMode from '../hooks/useDarkMode'
-import { useGlobalContext } from '../context'
-import { BASE_URL, BASE_URL_Img } from '../constatns'
-import { Loader } from '../components'
-import { useProduct } from '../lib/react-query/queriesAndMutations'
+import useDarkMode from "../hooks/useDarkMode";
+import { useGlobalContext } from "../context";
+import { BASE_URL, BASE_URL_Img } from "../constatns";
+import { Loader } from "../components";
+import { useProduct } from "../lib/react-query/queriesAndMutations";
 
 const SingleItem = () => {
-  const { productId } = useParams()
+  const { productId } = useParams();
 
-  const { data, isPending: isLoading } = useProduct(productId)
+  const { data, isPending: isLoading } = useProduct(productId);
 
-  const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(1);
 
-  const { cartData, setCartData, storeData } = useGlobalContext()
-  const { t, i18n } = useTranslation()
-  const navigate = useNavigate()
+  const { cartData, setCartData, storeData } = useGlobalContext();
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
-  useDarkMode()
+  useDarkMode();
 
-  const add = () => setQuantity((prev) => prev + 1)
+  const add = () => setQuantity((prev) => prev + 1);
   const remove = () => {
-    if (quantity === 1) return
-    setQuantity((prev) => prev - 1)
-  }
+    if (quantity === 1) return;
+    setQuantity((prev) => prev - 1);
+  };
 
   const addToCart = () => {
     const newCartItem = {
@@ -40,46 +40,48 @@ const SingleItem = () => {
       quantity,
       price: data?.data?.price?.toFixed(2) * quantity,
       calories: +data?.data?.calories,
-    }
+    };
 
     const existingItemIndex = cartData.findIndex(
       (item) => item.id === newCartItem.id && item.name === newCartItem.name
-    )
+    );
     if (existingItemIndex !== -1) {
-      cartData[existingItemIndex].quantity += newCartItem.quantity
-      cartData[existingItemIndex].price += newCartItem.price
-      setCartData([...cartData])
+      cartData[existingItemIndex].quantity += newCartItem.quantity;
+      cartData[existingItemIndex].price += newCartItem.price;
+      setCartData([...cartData]);
     } else {
-      setCartData([...cartData, newCartItem])
+      setCartData([...cartData, newCartItem]);
     }
-    setQuantity(1)
-    navigate(-1)
-  }
+    setQuantity(1);
+    navigate(-1);
+  };
 
   return (
     <div
-      dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
-      className='fixed overflow-y-auto inset-x-0 max-w-md md:ml-auto md:mr-0 mx-auto h-full bg-white overflow-x-hidden w-full z-[401] fastAnimate dark:bg-gray-700'
+      dir={i18n.language === "en" ? "ltr" : "rtl"}
+      className="fixed overflow-y-auto inset-x-0 max-w-md md:ml-auto md:mr-0 mx-auto h-full bg-white overflow-x-hidden w-full z-[401] fastAnimate dark:bg-gray-700"
     >
-      <div className='z-50 fixed w-full bg-white max-w-md mx-auto h-16 top-auto shadow-[1px_1px_8px_#597c8066] py-1 flex items-center justify-between gap-2 dark:bg-gray-700'>
-        <div className='col-span-9 grid grid-cols-12 justify-start items-center'>
+      <div className="z-50 fixed w-full bg-white max-w-md mx-auto h-16 top-auto shadow-[1px_1px_8px_#597c8066] py-1 flex items-center justify-between gap-2 dark:bg-gray-700">
+        <div className="col-span-9 grid grid-cols-12 justify-start items-center">
           <Link
-            to='/'
+            to="/"
             className={`col-span-10 pr-4 text-md font-semibold text-gray-500 dark:text-white overflow-y-hidden flex items-center cursor-pointer gap-2  ${
-              i18n.language === 'en' ? 'pl-4' : 'pr-4'
+              i18n.language === "en" ? "pl-4" : "pr-4"
             }`}
           >
             <img
-              src={storeData?.image ? BASE_URL_Img + storeData?.image : '/logo.png'}
+              src={
+                storeData?.image ? BASE_URL_Img + storeData?.image : "/logo.png"
+              }
               alt={storeData?.name}
-              className=' w-[56px] h-[57px]'
+              className=" w-[56px] h-[57px]"
             />
-            <h1 className='font-extrabold flex gap-1 flex-col text-md text-main dark:text-main/50'>
-              <span className='inline-block transform translate-y-1 mx-0.5 text-brown-400'>
+            <h1 className="font-extrabold flex gap-1 flex-col text-md text-main dark:text-main/50">
+              <span className="inline-block transform translate-y-1 mx-0.5 text-brown-400">
                 {storeData?.name}
               </span>
-              <span className='font-extrabold text-md text-main dark:text-main/50 overflow-hidden'>
-                {' '}
+              <span className="font-extrabold text-md text-main dark:text-main/50 overflow-hidden">
+                {" "}
                 {storeData?.enName}
               </span>
             </h1>
@@ -87,76 +89,75 @@ const SingleItem = () => {
         </div>
         <IoIosArrowBack
           className={`w-10 h-10 rounded-full text-main hover:bg-main hover:text-white dark:text-white transition p-2 cursor-pointer ${
-            i18n.language === 'en' ? 'mr-4 rotate-180' : 'ml-4'
+            i18n.language === "en" ? "mr-4 rotate-180" : "ml-4"
           }`}
-          title='رجوع'
+          title="رجوع"
           onClick={() => navigate(-1)}
         />
       </div>
       {isLoading ? (
         <Loader />
       ) : (
-        <div className='p-4 rounded-lg bg-white dark:bg-gray-700 flex flex-col w-full pt-16'>
-          <div className='flex flex-col justify-center text-center gap-4 mb-12 mt-5 dark:text-white'>
+        <div className="p-4 rounded-lg bg-white dark:bg-gray-700 flex flex-col w-full pt-16">
+          <div className="flex flex-col justify-center text-center gap-4 mb-12 mt-5 dark:text-white">
             <img
               src={BASE_URL_Img + data?.data?.image}
               alt={
-                i18n.language === 'en' ? data?.data?.enName : data?.data?.name
+                i18n.language === "en" ? data?.data?.enName : data?.data?.name
               }
-              className='w-full h-full object-scale-down rounded-lg dark:bg-white'
+              className="w-full h-full object-scale-down rounded-lg dark:bg-white"
             />
-            <h2 className='text-2xl text-main dark:text-white'>
-              {i18n.language === 'en' ? data?.data?.enName : data?.data?.name}
+            <h2 className="text-2xl text-main dark:text-white">
+              {i18n.language === "en" ? data?.data?.enName : data?.data?.name}
             </h2>
             {data?.data?.calories ? (
-              <span className='py-1 px-3 text-xs w-fit mx-auto rounded-full text-white bg-gray-900'>
-                {data?.data?.calories} {t('singleProduct:kcal')}
+              <span className="py-1 px-3 text-xs w-fit mx-auto rounded-full text-white bg-gray-900">
+                {data?.data?.calories} {t("singleProduct:kcal")}
               </span>
             ) : null}
-            <p className='text-gray-700 dark:text-gray-200 text-base'>
-              {i18n.language === 'en'
+            <p className="text-gray-700 dark:text-gray-200 text-base">
+              {i18n.language === "en"
                 ? data?.data?.enDetails
                 : data?.data?.details}
             </p>
-            <div className='flex flex-col gap-2'>
-              <h4 className='text-lg text-main bg-[#f3f4f6] py-1 rounded-full w-full text-center dark:bg-gray-900 dark:text-white'>
-                {t('singleProduct:quantity')}
+            <div className="flex flex-col gap-2">
+              <h4 className="text-lg text-main bg-[#f3f4f6] py-1 rounded-full w-full text-center dark:bg-gray-900 dark:text-white">
+                {t("singleProduct:quantity")}
               </h4>
-              <div className='flex items-center justify-center gap-4 select-none'>
+              <div className="flex items-center justify-center gap-4 select-none">
                 <IoRemoveCircleOutline
                   className={`text-4xl ${
                     quantity === 1
-                      ? 'text-[#0000004d] dark:text-[#9ca3af]'
-                      : 'text-main'
+                      ? "text-[#0000004d] dark:text-[#9ca3af]"
+                      : "text-main"
                   } cursor-pointer selected-none`}
                   onClick={remove}
                 />
-                <span className='text-xl'>{quantity}</span>
+                <span className="text-xl">{quantity}</span>
                 <IoAddCircleOutline
-                  className='text-4xl text-main cursor-pointer'
+                  className="text-4xl text-main cursor-pointer"
                   onClick={add}
                 />
               </div>
             </div>
           </div>
           <button
-            className='font-semibold flex items-center justify-center bg-main text-white rounded-full gap-2 border-2 border-main py-2 px-4 w-full '
+            className="font-semibold flex items-center justify-center bg-main text-white rounded-full gap-2 border-2 border-main py-2 px-4 w-full "
             // onClick={addToCart}
           >
             {/* <span className='flex items-center gap-2'>
               <IoMdAddCircle className='text-2xl text-white' /> {t('cart:add')}
             </span> */}
             {data ? (
-              <span className='text-md font-semibold whitespace-nowrap'>
-                {(data?.data?.price * quantity).toLocaleString('en-US')}{' '}
-                {t('singleProduct:currency')}
+              <span className="text-md font-semibold whitespace-nowrap">
+                {data?.data?.price * quantity} {t("singleProduct:currency")}
               </span>
             ) : null}
           </button>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SingleItem
+export default SingleItem;

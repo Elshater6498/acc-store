@@ -1,6 +1,6 @@
 import axios from "axios";
-export const BASE_URL = "https://api.aboalezgrill.com";
-export const BASE_URL_Img = "https://api.aboalezgrill.com/";
+export const BASE_URL = "http://localhost:4000";
+export const BASE_URL_Img = "http://localhost:4000/";
 export const FETCHER = (url) => axios.get(url).then((res) => res.data);
 export const options = {
   TAKEAWAY: "takeaway",

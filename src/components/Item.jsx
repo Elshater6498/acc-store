@@ -1,11 +1,15 @@
 import { useTranslation } from "react-i18next";
-import {  BASE_URL_Img } from "../constatns";
+import { BASE_URL_Img } from "../constatns";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context";
 
 const Item = ({ item, displayOnly = false }) => {
   const { t, i18n } = useTranslation();
   const { storeData } = useGlobalContext();
+
+  console.log("====================================");
+  console.log(item);
+  console.log("====================================");
 
   return (
     <Link
@@ -44,18 +48,18 @@ const Item = ({ item, displayOnly = false }) => {
             : item?.details}
         </p>
         <div className="flex justify-between py-2 items-center w-full">
-          {item?.calories ? (
+          {item?.itemPrice ? (
             <p className="text-sm dark:text-white">
-              {item.calories}
+              {item.itemPrice}
               <span className="text-main text-xs font-semibold">
-                {t("singleProduct:kcal")}
+                {t("singleProduct:currency")}
               </span>
             </p>
           ) : null}
           <span className="text-sm flex items-center font-semibold mr-auto ltr:ml-auto ltr:mr-0 dark:text-white">
             {item.options?.length
-              ? item.options[0].price.toLocaleString("en-US")
-              : item.price.toLocaleString("en-US")}
+              ? item.options[0].sellingPrice
+              : item.sellingPrice}
             <span className="text-main dark:text-white text-xs font-semibold mx-0.5">
               {t("singleProduct:currency")}
             </span>

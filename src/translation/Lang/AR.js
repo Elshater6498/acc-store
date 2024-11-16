@@ -46,7 +46,7 @@ export const ar = {
     quantity: "الكمية",
     size: "الحجم",
     options: "الاضافات",
-    currency: "ريال",
+    currency: "جنيه",
     kcal: "سعرة حرارية",
   },
   customerData: {

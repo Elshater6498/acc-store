@@ -1,25 +1,25 @@
-import { createContext, useState, useContext, useEffect } from 'react'
+import { createContext, useState, useContext, useEffect } from "react";
 import {
   useCategories,
   useRestaurant,
-} from '../lib/react-query/queriesAndMutations'
+} from "../lib/react-query/queriesAndMutations";
 
-const CartContext = createContext()
+const CartContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const getInitailCartData = () => {
-    const cartData = localStorage.getItem('cartData')
-    return cartData ? JSON.parse(cartData) : []
-  }
+    const cartData = localStorage.getItem("cartData");
+    return cartData ? JSON.parse(cartData) : [];
+  };
 
-  const [cartData, setCartData] = useState(getInitailCartData)
+  const [cartData, setCartData] = useState(getInitailCartData);
 
-  const { data: storeData, isPending: isLoadingStoreData } = useRestaurant()
-  const { data: categories, isPending: isLoadingCategories } = useCategories()
+  const { data: storeData, isPending: isLoadingStoreData } = useRestaurant();
+  const { data: categories, isPending: isLoadingCategories } = useCategories();
 
   useEffect(() => {
-    localStorage.setItem('cartData', JSON.stringify(cartData))
-  }, [cartData])
+    localStorage.setItem("cartData", JSON.stringify(cartData));
+  }, [cartData]);
   return (
     <CartContext.Provider
       value={{
@@ -32,7 +32,7 @@ export const AppProvider = ({ children }) => {
     >
       {children}
     </CartContext.Provider>
-  )
-}
+  );
+};
 
-export const useGlobalContext = () => useContext(CartContext)
+export const useGlobalContext = () => useContext(CartContext);

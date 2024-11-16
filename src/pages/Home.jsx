@@ -75,7 +75,7 @@ const Home = ({ value, setValue }) => {
           close={close}
         />
       )}
-      {/* <BottomBar /> */}
+      <BottomBar />
       <SideNav
         sideNav={sideNav}
         setSideNav={setSideNav}

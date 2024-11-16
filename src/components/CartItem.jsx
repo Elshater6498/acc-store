@@ -83,7 +83,7 @@ const CartItem = ({ item, done = false }) => {
             <span
               className={`text-sm flex items-center font-semibold dark:text-white`}
             >
-              {item.price ? item.price.toLocaleString("en-US") : null}
+              {item.price ? item.price : null}
               <span className="text-main dark:text-white text-xs font-semibold mx-0.5">
                 {t("singleProduct:currency")}
               </span>

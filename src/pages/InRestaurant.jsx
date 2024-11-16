@@ -82,9 +82,7 @@ const InRestaurant = () => {
   // };
 
   const onSubmit = async (data) => {
-    const total = cartData
-      .reduce((acc, item) => acc + item.price, 0)
-      .toLocaleString("en-US");
+    const total = cartData.reduce((acc, item) => acc + item.price, 0);
 
     if (total < 1) toast.warning(t("toast:minimumCost"));
     else {
