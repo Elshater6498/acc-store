@@ -12,8 +12,8 @@
 }
 
 @font-face {
-  font-family: 'fairuz';
-  src: url('/fonts/Fairuz-Normal.woff');
+  font-family: "fairuz";
+  src: url("/fonts/Fairuz-Normal.woff");
 }
 
 .add:valid ~ .valid {
@@ -21,7 +21,7 @@
 }
 
 /* Input Animation */
-input[type='text']:focus ~ .input-text {
+input[type="text"]:focus ~ .input-text {
   @apply text-main -translate-y-5 translate-x-2 scale-75;
 }
 
@@ -30,8 +30,8 @@ input[type='text']:focus ~ .input-text {
 }
 
 @layer utilities {
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number']::-webkit-outer-spin-button {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }

@@ -48,6 +48,7 @@ export const ar = {
     options: "الاضافات",
     currency: "جنيه",
     kcal: "سعرة حرارية",
+    insteadOf: "بدلا من",
   },
   customerData: {
     name: "الاسم",

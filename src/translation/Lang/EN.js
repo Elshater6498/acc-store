@@ -49,6 +49,7 @@ export const en = {
     options: "Addons",
     currency: "EGP",
     kcal: "kcal",
+    insteadOf: "Instead Of",
   },
   customerData: {
     name: "Name",

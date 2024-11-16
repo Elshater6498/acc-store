@@ -36,7 +36,7 @@ const BottomBar = () => {
       </span>
       <div className="text-white flex items-center gap-2">
         <span className="text-md font-semibold">
-          {cartData.reduce((acc, item) => acc + item.price, 0)}
+          {cartData.reduce((acc, item) => acc + item.sellingPrice, 0)}
         </span>
         {t("singleProduct:currency")}
       </div>

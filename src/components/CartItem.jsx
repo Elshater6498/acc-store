@@ -2,13 +2,17 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IoRemoveCircleOutline, IoAddCircleOutline } from "react-icons/io5";
 import { FiX } from "react-icons/fi";
-
 import { useGlobalContext } from "../context";
 import { BASE_URL_Img } from "../constatns";
+import AwesomeSlider from "react-awesome-slider";
+import withAutoplay from "react-awesome-slider/dist/autoplay";
+import "react-awesome-slider/dist/styles.css";
+
+const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const CartItem = ({ item, done = false }) => {
   const { setCartData } = useGlobalContext();
-  const [oldPrice] = useState(item.price / item.quantity);
+  const [oldPrice] = useState(item.sellingPrice / item.quantity);
   const { t, i18n } = useTranslation();
 
   const add = () => {
@@ -40,7 +44,7 @@ const CartItem = ({ item, done = false }) => {
   return (
     <div className={`w-full ${done ? "pointer-events-none" : ""}`}>
       <div className="w-full h-28 rounded-lg grid grid-cols-12 gap-2 cursor-pointer bg-gray-100 dark:bg-gray-900">
-        <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
+        {/* <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
           <div>
             <img
               className="absolute inset-0 w-full h-full p-0.5 object-cover rounded-lg"
@@ -48,6 +52,43 @@ const CartItem = ({ item, done = false }) => {
               alt={i18n.language === "en" ? item.en_name : item.name}
             />
           </div>
+        </div> */}
+        <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
+          {item.images && item.images.length > 0 ? (
+            <AutoplaySlider
+              cancelOnInteraction={true}
+              play={true}
+              interval={3000}
+              organicArrows={false}
+              bullets={false}
+              fillParent={true}
+            >
+              {item.images.map((img, index) => (
+                <div key={index}>
+                  <img
+                    src={BASE_URL_Img + img}
+                    alt={item.name}
+                    className="absolute inset-0 w-full h-full p-0.5 object-cover rounded-lg"
+                  />
+                </div>
+              ))}
+            </AutoplaySlider>
+          ) : (
+            // Fallback for items without images
+            <img
+              className="w-full h-full p-0.5 object-cover rounded-lg"
+              src={
+                displayOnly
+                  ? item.image || storeData?.image
+                    ? BASE_URL_Img + storeData?.image
+                    : "/logo.png"
+                  : BASE_URL_Img + item.image || storeData?.image
+                  ? BASE_URL_Img + item?.image
+                  : "/logo.png"
+              }
+              alt="item img"
+            />
+          )}
         </div>
         <div className="w-full relative col-span-8 sm:col-span-9 space-y-1 sm:space-y-2 px-2 flex flex-col justify-between">
           <div className="mt-2 text-sm text-main font-semibold dark:text-white">
@@ -83,7 +124,7 @@ const CartItem = ({ item, done = false }) => {
             <span
               className={`text-sm flex items-center font-semibold dark:text-white`}
             >
-              {item.price ? item.price : null}
+              {item.sellingPrice ? item.sellingPrice : null}
               <span className="text-main dark:text-white text-xs font-semibold mx-0.5">
                 {t("singleProduct:currency")}
               </span>

@@ -3,12 +3,16 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5";
 import { IoMdAddCircle, IoIosArrowBack } from "react-icons/io";
-
 import useDarkMode from "../hooks/useDarkMode";
 import { useGlobalContext } from "../context";
-import { BASE_URL, BASE_URL_Img } from "../constatns";
+import { BASE_URL_Img } from "../constatns";
 import { Loader } from "../components";
 import { useProduct } from "../lib/react-query/queriesAndMutations";
+import AwesomeSlider from "react-awesome-slider";
+import withAutoplay from "react-awesome-slider/dist/autoplay";
+import "react-awesome-slider/dist/styles.css";
+
+const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const SingleItem = () => {
   const { productId } = useParams();
@@ -34,12 +38,14 @@ const SingleItem = () => {
       id: data?.data?._id,
       name: data?.data?.name,
       en_name: data?.data?.enName,
-      img: BASE_URL_Img + data?.data?.image,
+      images: data?.data?.images,
       details: data?.data?.details,
       en_details: data?.data?.enDetails,
       quantity,
-      price: data?.data?.price?.toFixed(2) * quantity,
-      calories: +data?.data?.calories,
+      itemPrice: data?.data?.itemPrice?.toFixed(2) * quantity,
+      sellingPrice: data?.data?.sellingPrice?.toFixed(2) * quantity,
+      purchasePrice: data?.data?.purchasePrice?.toFixed(2) * quantity,
+      profitMargin: data?.data?.profitMargin?.toFixed(2) * quantity,
     };
 
     const existingItemIndex = cartData.findIndex(
@@ -47,7 +53,9 @@ const SingleItem = () => {
     );
     if (existingItemIndex !== -1) {
       cartData[existingItemIndex].quantity += newCartItem.quantity;
-      cartData[existingItemIndex].price += newCartItem.price;
+      cartData[existingItemIndex].sellingPrice += newCartItem.sellingPrice;
+      cartData[existingItemIndex].purchasePrice += newCartItem.purchasePrice;
+      cartData[existingItemIndex].profitMargin += newCartItem.profitMargin;
       setCartData([...cartData]);
     } else {
       setCartData([...cartData, newCartItem]);
@@ -100,21 +108,51 @@ const SingleItem = () => {
       ) : (
         <div className="p-4 rounded-lg bg-white dark:bg-gray-700 flex flex-col w-full pt-16">
           <div className="flex flex-col justify-center text-center gap-4 mb-12 mt-5 dark:text-white">
-            <img
+            {/* <img
               src={BASE_URL_Img + data?.data?.image}
               alt={
                 i18n.language === "en" ? data?.data?.enName : data?.data?.name
               }
               className="w-full h-full object-scale-down rounded-lg dark:bg-white"
-            />
+            /> */}
+            <AutoplaySlider
+              cancelOnInteraction={true}
+              play={true}
+              interval={3000}
+              organicArrows={false}
+              bullets={false}
+              fillParent={false}
+            >
+              {data?.data?.images.map((img, index) => (
+                <div key={index} className="w-full h-full">
+                  <img
+                    src={BASE_URL_Img + img}
+                    alt={
+                      i18n.language === "en"
+                        ? data?.data?.enName
+                        : data?.data?.name
+                    }
+                    className="w-full h-full object-scale-down rounded-lg dark:bg-white"
+                  />
+                </div>
+              ))}
+            </AutoplaySlider>
             <h2 className="text-2xl text-main dark:text-white">
               {i18n.language === "en" ? data?.data?.enName : data?.data?.name}
             </h2>
-            {data?.data?.calories ? (
-              <span className="py-1 px-3 text-xs w-fit mx-auto rounded-full text-white bg-gray-900">
-                {data?.data?.calories} {t("singleProduct:kcal")}
-              </span>
-            ) : null}
+            <div className="flex gap-2 py-1 px-3 text-xs w-fit mx-auto rounded-full text-white bg-gray-900">
+              {data?.data?.sellingPrice ? (
+                <span>
+                  {data?.data?.sellingPrice} {t("singleProduct:currency")}
+                </span>
+              ) : null}
+              {t("singleProduct:insteadOf")}
+              {data?.data?.itemPrice ? (
+                <span>
+                  {data?.data?.itemPrice} {t("singleProduct:currency")}
+                </span>
+              ) : null}
+            </div>
             <p className="text-gray-700 dark:text-gray-200 text-base">
               {i18n.language === "en"
                 ? data?.data?.enDetails
@@ -143,14 +181,15 @@ const SingleItem = () => {
           </div>
           <button
             className="font-semibold flex items-center justify-center bg-main text-white rounded-full gap-2 border-2 border-main py-2 px-4 w-full "
-            // onClick={addToCart}
+            onClick={addToCart}
           >
-            {/* <span className='flex items-center gap-2'>
-              <IoMdAddCircle className='text-2xl text-white' /> {t('cart:add')}
-            </span> */}
+            <span className="flex items-center gap-2">
+              <IoMdAddCircle className="text-2xl text-white" /> {t("cart:add")}
+            </span>
             {data ? (
               <span className="text-md font-semibold whitespace-nowrap">
-                {data?.data?.price * quantity} {t("singleProduct:currency")}
+                {data?.data?.sellingPrice * quantity}{" "}
+                {t("singleProduct:currency")}
               </span>
             ) : null}
           </button>

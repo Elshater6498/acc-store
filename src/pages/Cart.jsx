@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-
 import useDarkMode from "../hooks/useDarkMode";
 import { useGlobalContext } from "../context";
 import { CartItem } from "../components";
@@ -17,7 +16,7 @@ const CartPage = () => {
   return (
     <div
       dir={i18n.language === "en" ? "ltr" : "rtl"}
-      className="fixed overflow-y-auto inset-x-0 max-w-md md:ml-auto dark:bg-gray-700 md:mr-0 mx-auto h-full bg-white overflow-x-hidden w-full z-[401] fastAnimate dark:bg-gray-700"
+      className="fixed overflow-y-auto inset-x-0 max-w-md md:ml-auto dark:bg-gray-700 md:mr-0 mx-auto h-full bg-white overflow-x-hidden w-full z-[401] fastAnimate"
     >
       <div className="z-50 fixed w-full bg-white max-w-md mx-auto h-16 top-auto shadow-[1px_1px_8px_#597c8066] py-1 flex items-center justify-between gap-2 dark:bg-gray-700">
         <div className="col-span-9 grid grid-cols-12 justify-start items-center">
@@ -87,7 +86,7 @@ const CartPage = () => {
             </p>
             <div className="flex items-center font-semibold gap-2 dark:text-white">
               <span className="text-main dark:text-white text-lg font-semibold">
-                {cartData.reduce((acc, item) => acc + item.price, 0)}
+                {cartData.reduce((acc, item) => acc + item.sellingPrice, 0)}
               </span>
               {t("singleProduct:currency")}
             </div>
