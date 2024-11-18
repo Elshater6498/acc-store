@@ -33,14 +33,14 @@ const OffersSlider = ({ offers }) => {
         loop={true}
         modules={[Autoplay, Pagination, Navigation]}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
-        className="mySwiper"
+        className="mySwiper !h-60 rounded-lg my-2 !max-w-[27rem]"
       >
         {offers
           .filter((offer) => offer.isActive === true)
           .sort((a, b) => a.id - b.id)
           .map((offer, i) => (
             <SwiperSlide
-              className="h-60 !bg-transparent !px-2"
+              className=""
               key={i}
               onClick={() => navigate(`/offers/${offer._id}`)}
             >
@@ -61,7 +61,7 @@ const OffersSlider = ({ offers }) => {
               <img
                 src={BASE_URL_Img + offer?.image}
                 alt={offer.name}
-                className="h-full w-full object-contain"
+                className="h-full w-full object-cover"
               />
             </SwiperSlide>
           ))}

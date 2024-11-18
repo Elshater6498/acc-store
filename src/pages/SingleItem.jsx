@@ -142,10 +142,10 @@ const SingleItem = () => {
                 loop={true}
                 modules={[Autoplay, Pagination, Navigation]}
                 onAutoplayTimeLeft={onAutoplayTimeLeft}
-                className="mySwiper"
+                className="mySwiper !rounded-lg"
               >
                 {data?.data?.images?.map((img, index) => (
-                  <SwiperSlide key={index} className="w-full !bg-transparent">
+                  <SwiperSlide key={index} className="">
                     <img
                       src={BASE_URL_Img + img}
                       alt={
@@ -153,7 +153,7 @@ const SingleItem = () => {
                           ? data?.data?.enName
                           : data?.data?.name
                       }
-                      className="w-full h-full object-contain rounded-lg dark:bg-white"
+                      className="w-full h-full object-contain"
                     />
                   </SwiperSlide>
                 ))}
