@@ -13,10 +13,13 @@ import {
 } from "../components";
 import {
   useCategories,
+  useOffers,
+  useOffersSearch,
   useProductsByCategoryID,
   useProductsSearch,
 } from "../lib/react-query/queriesAndMutations";
 import { useParams } from "react-router-dom";
+import OffersSlider from "../components/OffersSlider";
 
 const Home = ({ value, setValue }) => {
   const inputRef = useRef();
@@ -31,6 +34,7 @@ const Home = ({ value, setValue }) => {
   const { t } = useTranslation();
   const { storeData } = useGlobalContext();
   const { data: categories } = useCategories();
+  const { data: offers } = useOffers();
   const { data: products, isPending: isLoading } = useProductsByCategoryID(
     categoryID || categories?.data[value]?._id
   );
@@ -67,10 +71,12 @@ const Home = ({ value, setValue }) => {
           setSearchQuery={setSearchQuery}
         />
       </div>
+      {offers?.data?.length ? <OffersSlider offers={offers?.data} /> : null}
       <Categories data={categories?.data} value={value} setValue={setValue} />
       {isSubmitted && (
         <SearchLabel
           filteredItems={filteredItems?.data}
+          filteredOffers={filteredOffers?.data}
           searchValue={searchValue}
           close={close}
         />

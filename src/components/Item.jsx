@@ -20,22 +20,22 @@ const Item = ({ item, displayOnly = false }) => {
         displayOnly ? "pointer-events-none" : ""
       }`}
     >
-      {/* <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
+      <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
         <img
           className="absolute inset-0 w-full h-full p-0.5 object-cover rounded-lg"
           src={
             displayOnly
-              ? item.images || storeData?.image
+              ? item.images[0] || storeData?.image
                 ? BASE_URL_Img + storeData?.image
                 : "/logo.png"
-              : BASE_URL_Img + item.images || storeData?.image
-              ? BASE_URL_Img + item?.images
+              : BASE_URL_Img + item.images[0] || storeData?.image
+              ? BASE_URL_Img + item?.images[0]
               : "/logo.png"
           }
           alt="item img"
         />
-      </div> */}
-      <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
+      </div>
+      {/* <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
         {item.images && item.images.length > 0 ? (
           <AutoplaySlider
             cancelOnInteraction={true}
@@ -71,7 +71,7 @@ const Item = ({ item, displayOnly = false }) => {
             alt="item img"
           />
         )}
-      </div>
+      </div> */}
       <div className="w-full relative col-span-8 sm:col-span-9 space-y-1 sm:space-y-2 px-2 flex flex-col justify-between">
         <h3 className="mt-2 text-sm text-main font-semibold  dark:text-white">
           {i18n.language === "en" ? item.enName : item.name}
@@ -85,7 +85,7 @@ const Item = ({ item, displayOnly = false }) => {
             ? `${item.details?.slice(0, 50)}...`
             : item?.details}
         </p>
-        <div className="flex gap-2 py-2 items-center w-full">
+        <div className="flex justify-end items-center gap-2 w-full py-2">
           <span className="text-sm flex items-center font-semibold dark:text-white">
             {item.options?.length
               ? item.options[0].sellingPrice

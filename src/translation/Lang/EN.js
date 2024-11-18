@@ -93,4 +93,8 @@ export const en = {
     track_order: "track order",
     copied: "copied",
   },
+  topNav: {
+    welcomeMessage:
+      "Hello,💕 Welcome to our WhatsApp for beauty products 🛍✨ If you need anything or have any questions, we’re here to help you 💄🌸 Tell us, what are you looking for? 😊",
+  },
 };

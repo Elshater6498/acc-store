@@ -64,7 +64,7 @@ const App = () => {
                 path="/:categoryName"
                 element={<Home value={value} setValue={setValue} />}
               />
-              <Route path="/takeaway" element={<Delivery />} />
+              <Route path="/delivery" element={<Delivery />} />
               <Route path="/order-details/:id" element={<OrderDetails />} />
               <Route path="/track-order/:orderId" element={<TrackOrder />} />
               <Route
@@ -77,8 +77,12 @@ const App = () => {
                 path="/products/:productId"
                 element={<SingleItem singleItem={singleItem} />}
               />
+              <Route
+                path="/offers/:offerId"
+                element={<SingleItem singleItem={singleItem} />}
+              />
               <Route path="/options" element={<Options />} />
-              <Route path="/inRestaurant" element={<InRestaurant />} />
+              <Route path="/in_restaurant" element={<InRestaurant />} />
             </Routes>
           </div>
 

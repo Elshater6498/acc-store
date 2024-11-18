@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { BsBagCheck, BsShop } from "react-icons/bs";
+import { BsBagCheck } from "react-icons/bs";
 import { IoIosArrowBack } from "react-icons/io";
 import { BASE_URL, BASE_URL_Img, options } from "../constatns";
 import { useGlobalContext } from "../context";
@@ -20,9 +20,7 @@ const Options = () => {
 
   const onSubmit = (data) => {
     if (cartData?.length === 0) return;
-    if (data.delivery === options.IN_RESTAURANT) {
-      navigate(`/${options.IN_RESTAURANT}`);
-    } else {
+    if (data.delivery === options.DELIVER_HOME) {
       navigate(`/${options.DELIVER_HOME}`);
     }
   };
@@ -74,33 +72,6 @@ const Options = () => {
             </small>
           )}
           <div className="flex flex-col items-center justify-center gap-8 py-4">
-            {storeData?.tables ? (
-              <div>
-                <input
-                  type="radio"
-                  className="hidden peer"
-                  id={options.IN_RESTAURANT}
-                  value={options.IN_RESTAURANT}
-                  {...register("delivery", {
-                    required: {
-                      value: true,
-                      message: errMessage,
-                    },
-                  })}
-                />
-                <label
-                  className={`peer-checked:border-main peer-checked:bg-main text-gray-700 peer-checked:text-white flex flex-col items-center justify-center gap-3 border w-44 h-28 p-2 rounded-md dark:text-white ${
-                    errors.delivery ? "border-red-500" : "border-gray-400"
-                  }`}
-                  htmlFor={options.IN_RESTAURANT}
-                >
-                  <BsShop className="text-5xl" />
-                  <span className="text-sm">
-                    {t("customerData:inRestaurant")}
-                  </span>
-                </label>
-              </div>
-            ) : null}
             <div>
               <input
                 type="radio"
@@ -127,32 +98,6 @@ const Options = () => {
                 {t("customerData:deliveryFees")}
               </span> */}
             </div>
-            {/* <div>
-              <input
-                type="radio"
-                className="hidden peer"
-                id={options.FROM_STORE}
-                value={options.FROM_STORE}
-                {...register("delivery", {
-                  required: {
-                    value: true,
-                    message: errMessage,
-                  },
-                })}
-              />
-              <label
-                className={`peer-checked:border-main peer-checked:bg-main text-gray-700 peer-checked:text-white flex flex-col dark:text-white items-center justify-center gap-3 border p-2 w-44 h-28 rounded-md ${
-                  errors.delivery ? "border-red-500" : "border-gray-400"
-                }`}
-                htmlFor={options.FROM_STORE}
-              >
-                <BsBagCheck className="text-5xl" />
-                <span className="text-sm">{t("customerData:delivery")}</span>
-              </label>
-              <span className="text-xs text-gray-700 dark:text-white">
-                {t("customerData:branchReceipt")}
-              </span>
-            </div> */}
           </div>
         </div>
         <button

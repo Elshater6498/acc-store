@@ -5,7 +5,7 @@ import { useGlobalContext } from "../context";
 import { BsWhatsapp } from "react-icons/bs";
 
 export default function TopNav({ setSideNav }) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { storeData } = useGlobalContext();
 
   const changeLang = () => {
@@ -54,7 +54,9 @@ export default function TopNav({ setSideNav }) {
           >
             <a
               className="relative flex justify-between items-center dark:bg-gray-600 dark:hover:bg-gray-500 py-2 px-2 rounded-full hover:bg-gray-200 transition bg-gray-100 bg-opacity-500 text-gray-800"
-              href={`https://api.whatsapp.com/send/?phone=${storeData?.whatsapp}`}
+              href={`https://api.whatsapp.com/send/?phone=${
+                storeData?.whatsapp
+              }&text=${t("topNav:welcomeMessage")}`}
               target="_blank"
               rel="noreferrer"
             >

@@ -12,13 +12,15 @@ const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const CartItem = ({ item, done = false }) => {
   const { setCartData } = useGlobalContext();
-  const [oldPrice] = useState(item.sellingPrice / item.quantity);
+  const [oldItemPrice] = useState(item.itemPrice / item.quantity);
+  const [oldSellingPrice] = useState(item.sellingPrice / item.quantity);
   const { t, i18n } = useTranslation();
 
   const add = () => {
     setCartData((prev) => {
       ++item.quantity;
-      item.price = oldPrice * item.quantity;
+      item.itemPrice = oldItemPrice * item.quantity;
+      item.sellingPrice = oldSellingPrice * item.quantity;
       return [...prev];
     });
   };
@@ -26,7 +28,8 @@ const CartItem = ({ item, done = false }) => {
     if (item.quantity === 1) return;
     setCartData((prev) => {
       --item.quantity;
-      item.price = oldPrice * item.quantity;
+      item.itemPrice = oldItemPrice * item.quantity;
+      item.sellingPrice = oldSellingPrice * item.quantity;
       return [...prev];
     });
   };
@@ -44,16 +47,16 @@ const CartItem = ({ item, done = false }) => {
   return (
     <div className={`w-full ${done ? "pointer-events-none" : ""}`}>
       <div className="w-full h-28 rounded-lg grid grid-cols-12 gap-2 cursor-pointer bg-gray-100 dark:bg-gray-900">
-        {/* <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
+        <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
           <div>
             <img
               className="absolute inset-0 w-full h-full p-0.5 object-cover rounded-lg"
-              src={item.img}
+              src={BASE_URL_Img + item.images[0]}
               alt={i18n.language === "en" ? item.en_name : item.name}
             />
           </div>
-        </div> */}
-        <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
+        </div>
+        {/* <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
           {item.images && item.images.length > 0 ? (
             <AutoplaySlider
               cancelOnInteraction={true}
@@ -89,7 +92,7 @@ const CartItem = ({ item, done = false }) => {
               alt="item img"
             />
           )}
-        </div>
+        </div> */}
         <div className="w-full relative col-span-8 sm:col-span-9 space-y-1 sm:space-y-2 px-2 flex flex-col justify-between">
           <div className="mt-2 text-sm text-main font-semibold dark:text-white">
             {i18n.language === "en" ? item.en_name : item.name}
@@ -121,14 +124,25 @@ const CartItem = ({ item, done = false }) => {
                 onClick={add}
               />
             </div>
-            <span
-              className={`text-sm flex items-center font-semibold dark:text-white`}
-            >
-              {item.sellingPrice ? item.sellingPrice : null}
-              <span className="text-main dark:text-white text-xs font-semibold mx-0.5">
-                {t("singleProduct:currency")}
+            <div className="flex gap-2">
+              <span
+                className={`text-sm flex items-center font-semibold dark:text-white`}
+              >
+                {item.sellingPrice ? item.sellingPrice : null}
+                <span className="text-main dark:text-white text-xs font-semibold mx-0.5">
+                  {t("singleProduct:currency")}
+                </span>
               </span>
-            </span>
+              {t("singleProduct:insteadOf")}
+              <span
+                className={`text-sm flex items-center font-semibold dark:text-white`}
+              >
+                {item.itemPrice ? item.itemPrice : null}
+                <span className="text-main dark:text-white text-xs font-semibold mx-0.5">
+                  {t("singleProduct:currency")}
+                </span>
+              </span>
+            </div>
             {!done && (
               <FiX
                 className={`w-5 absolute -top-2 h-5 p-0.5 rounded-full bg-red-600 text-gray-50 hover:bg-opacity-100 opacity-80 dark:bg-red-600 dark:text-gray-50 block transform hover:rotate-180 cursor-pointer transition duration-300 ease ${
