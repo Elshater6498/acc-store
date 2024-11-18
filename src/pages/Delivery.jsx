@@ -27,9 +27,6 @@ const Delivery = () => {
   } = useForm();
 
   const onSubmitToWhatsApp = async (data) => {
-    console.log("====================================");
-    console.log(data);
-    console.log("===================================="); // Handle Message
     const total = cartData
       .reduce((acc, item) => acc + item.sellingPrice, 0)
       .toLocaleString("en-US");

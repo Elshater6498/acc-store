@@ -7,7 +7,7 @@ import useDarkMode from "../hooks/useDarkMode";
 import { useGlobalContext } from "../context";
 import { BASE_URL_Img } from "../constatns";
 import { Loader } from "../components";
-import { useProduct, useOffer } from "../lib/react-query/queriesAndMutations";
+import { useOffer, useProduct } from "../lib/react-query/queriesAndMutations";
 import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
@@ -16,23 +16,15 @@ const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const SingleItem = () => {
   const { productId, offerId } = useParams();
-
-  const { data: productData, isPending: isProductLoading } =
-    useProduct(productId);
-  const { data: offerData, isPending: isOfferLoading } = useOffer(offerId);
-  console.log("====================================");
-  console.log("offerData", productData);
-  console.log("====================================");
-
-  const data = productId ? productData : offerData;
-  const isLoading = productId ? isProductLoading : isOfferLoading;
+  const isOffer = !!offerId;
+  const { data, isPending: isLoading } = isOffer
+    ? useOffer(offerId)
+    : useProduct(productId);
 
   const [quantity, setQuantity] = useState(1);
-
   const { cartData, setCartData, storeData } = useGlobalContext();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-
   useDarkMode();
 
   const add = () => setQuantity((prev) => prev + 1);
@@ -42,19 +34,19 @@ const SingleItem = () => {
   };
 
   const addToCart = () => {
+    const itemData = data?.data;
     const newCartItem = {
-      id: data?.data?._id,
-      name: data?.data?.name,
-      en_name: data?.data?.enName,
-      images: data?.data?.images,
-      details: data?.data?.details,
-      en_details: data?.data?.enDetails,
+      id: itemData?._id,
+      name: itemData?.name,
+      en_name: itemData?.enName,
+      images: isOffer ? [itemData?.image] : itemData?.images,
+      details: itemData?.details,
+      en_details: itemData?.enDetails,
       quantity,
-      itemPrice: data?.data?.itemPrice?.toFixed(2) * quantity,
-      sellingPrice: data?.data?.sellingPrice?.toFixed(2) * quantity,
-      purchasePrice: data?.data?.purchasePrice?.toFixed(2) * quantity,
-      profitMargin: data?.data?.profitMargin?.toFixed(2) * quantity,
-      isOffer: !!offerId,
+      itemPrice: itemData?.itemPrice?.toFixed(2) * quantity,
+      sellingPrice: itemData?.sellingPrice?.toFixed(2) * quantity,
+      purchasePrice: itemData?.purchasePrice?.toFixed(2) * quantity,
+      profitMargin: itemData?.profitMargin?.toFixed(2) * quantity,
     };
 
     const existingItemIndex = cartData.findIndex(
@@ -117,32 +109,10 @@ const SingleItem = () => {
       ) : (
         <div className="p-4 rounded-lg bg-white dark:bg-gray-700 flex flex-col w-full pt-16">
           <div className="flex flex-col justify-center text-center gap-4 mb-12 mt-5 dark:text-white">
-            <AutoplaySlider
-              cancelOnInteraction={true}
-              play={true}
-              interval={3000}
-              organicArrows={false}
-              bullets={false}
-              fillParent={false}
-            >
-              {data?.data?.images?.map((img, index) => (
-                <div key={index} className="w-full h-full">
-                  <img
-                    src={BASE_URL_Img + img}
-                    alt={
-                      i18n.language === "en"
-                        ? data?.data?.enName
-                        : data?.data?.name
-                    }
-                    className="w-full h-full object-scale-down rounded-lg dark:bg-white"
-                  />
-                </div>
-              ))}
-            </AutoplaySlider>
-            {offerId && (
-              <div key={index} className="w-full h-full">
+            {isOffer ? (
+              <div className="w-full h-full">
                 <img
-                  src={BASE_URL_Img + data.image}
+                  src={BASE_URL_Img + data?.data?.image}
                   alt={
                     i18n.language === "en"
                       ? data?.data?.enName
@@ -151,6 +121,29 @@ const SingleItem = () => {
                   className="w-full h-full object-scale-down rounded-lg dark:bg-white"
                 />
               </div>
+            ) : (
+              <AutoplaySlider
+                cancelOnInteraction={true}
+                play={true}
+                interval={3000}
+                organicArrows={false}
+                bullets={false}
+                fillParent={false}
+              >
+                {data?.data?.images?.map((img, index) => (
+                  <div key={index} className="w-full h-full">
+                    <img
+                      src={BASE_URL_Img + img}
+                      alt={
+                        i18n.language === "en"
+                          ? data?.data?.enName
+                          : data?.data?.name
+                      }
+                      className="w-full h-full object-scale-down rounded-lg dark:bg-white"
+                    />
+                  </div>
+                ))}
+              </AutoplaySlider>
             )}
             <h2 className="text-2xl text-main dark:text-white">
               {i18n.language === "en" ? data?.data?.enName : data?.data?.name}

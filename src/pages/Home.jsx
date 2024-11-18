@@ -14,7 +14,6 @@ import {
 import {
   useCategories,
   useOffers,
-  useOffersSearch,
   useProductsByCategoryID,
   useProductsSearch,
 } from "../lib/react-query/queriesAndMutations";
@@ -76,7 +75,6 @@ const Home = ({ value, setValue }) => {
       {isSubmitted && (
         <SearchLabel
           filteredItems={filteredItems?.data}
-          filteredOffers={filteredOffers?.data}
           searchValue={searchValue}
           close={close}
         />

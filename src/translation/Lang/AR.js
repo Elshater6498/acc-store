@@ -57,6 +57,7 @@ export const ar = {
     delivery: "التوصيل الي المنزل",
     branchReceipt: "الاستلام من الفرع",
     deliveryFees: "يتم تحديد رسوم التوصيل من الفرع",
+    freeDelivery: "التوصيل مجانى",
     inRestaurant: "داخل المطعم",
     tableError: "رقم الطاولة غير موجود في المطعم",
     table_num: "رقم الطاولة",

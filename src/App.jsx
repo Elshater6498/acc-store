@@ -7,16 +7,7 @@ import ReactGA from "react-ga4";
 import useDarkMode from "./hooks/useDarkMode";
 import { Loader } from "./components";
 import { BASE_URL_Img } from "./constatns";
-import {
-  Home,
-  Delivery,
-  SingleItem,
-  Cart,
-  Options,
-  InRestaurant,
-  TrackOrder,
-  OrderDetails,
-} from "./pages";
+import { Home, Delivery, SingleItem, Cart, Options } from "./pages";
 import { useGlobalContext } from "./context";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -65,8 +56,6 @@ const App = () => {
                 element={<Home value={value} setValue={setValue} />}
               />
               <Route path="/delivery" element={<Delivery />} />
-              <Route path="/order-details/:id" element={<OrderDetails />} />
-              <Route path="/track-order/:orderId" element={<TrackOrder />} />
               <Route
                 path="/cart"
                 element={
@@ -82,7 +71,6 @@ const App = () => {
                 element={<SingleItem singleItem={singleItem} />}
               />
               <Route path="/options" element={<Options />} />
-              <Route path="/in_restaurant" element={<InRestaurant />} />
             </Routes>
           </div>
 

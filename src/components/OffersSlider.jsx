@@ -7,9 +7,6 @@ import "react-awesome-slider/dist/styles.css";
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const OffersSlider = ({ offers }) => {
-  console.log("====================================");
-  console.log(offers);
-  console.log("====================================");
   const navigate = useNavigate();
   return (
     <AutoplaySlider
@@ -26,7 +23,7 @@ const OffersSlider = ({ offers }) => {
           <button
             className="cursor-pointer h-56 shadow-md rounded-lg overflow-hidden w-full"
             key={i}
-            onClick={() => navigate(`/offer/${offer._id}`)}
+            onClick={() => navigate(`/offers/${offer._id}`)}
           >
             <img
               src={BASE_URL_Img + offer?.image}

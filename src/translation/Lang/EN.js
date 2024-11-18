@@ -58,6 +58,7 @@ export const en = {
     delivery: "Home delivery",
     branchReceipt: "from the branch",
     deliveryFees: "fees are determined by branch",
+    freeDelivery: "Free delivery",
     inRestaurant: "in restaurant",
     tableError: "table number not existed",
     table_num: "table number",

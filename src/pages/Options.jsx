@@ -94,9 +94,9 @@ const Options = () => {
                 <BsBagCheck className="text-5xl" />
                 <span className="text-sm">{t("customerData:delivery")}</span>
               </label>
-              {/* <span className="text-xs text-gray-700 dark:text-white">
-                {t("customerData:deliveryFees")}
-              </span> */}
+              <span className="text-xs text-gray-700 dark:text-white">
+                {t("customerData:freeDelivery")}
+              </span>
             </div>
           </div>
         </div>
