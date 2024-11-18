@@ -84,15 +84,15 @@ const CartPage = () => {
             <p className="border-main text-main dark:text-white text-lg font-semibold">
               {t("cart:total")}
             </p>
-            <div className="flex gap-2">
-              <div className="flex items-center font-semibold gap-2 dark:text-white">
+            <div className="flex items-center gap-2 dark:text-white">
+              <div className="flex items-center font-semibold gap-1">
                 <span className="text-main dark:text-white text-lg font-semibold">
                   {cartData.reduce((acc, item) => acc + item.sellingPrice, 0)}
                 </span>
                 {t("singleProduct:currency")}
               </div>
               {t("singleProduct:insteadOf")}
-              <div className="flex items-center font-semibold gap-2 dark:text-white">
+              <div className="flex items-center font-semibold gap-1">
                 <span className="text-main dark:text-white text-lg font-semibold">
                   {cartData.reduce((acc, item) => acc + item.itemPrice, 0)}
                 </span>

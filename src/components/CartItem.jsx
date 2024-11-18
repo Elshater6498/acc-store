@@ -88,21 +88,17 @@ const CartItem = ({ item, done = false }) => {
                 onClick={add}
               />
             </div>
-            <div className="flex gap-2">
-              <span
-                className={`text-sm flex items-center font-semibold dark:text-white`}
-              >
+            <div className="flex items-center gap-2 dark:text-white">
+              <span className="text-sm flex items-center font-semibold">
                 {item.sellingPrice ? item.sellingPrice : null}
                 <span className="text-main dark:text-white text-xs font-semibold mx-0.5">
                   {t("singleProduct:currency")}
                 </span>
               </span>
               {t("singleProduct:insteadOf")}
-              <span
-                className={`text-sm flex items-center font-semibold dark:text-white`}
-              >
+              <span className="text-sm flex items-center gap-1 font-semibold">
                 {item.itemPrice ? item.itemPrice : null}
-                <span className="text-main dark:text-white text-xs font-semibold mx-0.5">
+                <span className="text-main dark:text-white text-xs font-semibold">
                   {t("singleProduct:currency")}
                 </span>
               </span>

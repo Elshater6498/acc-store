@@ -1,39 +1,78 @@
+import { BASE_URL_Img } from "../constatns";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL, BASE_URL_Img } from "../constatns";
-import AwesomeSlider from "react-awesome-slider";
-import withAutoplay from "react-awesome-slider/dist/autoplay";
-import "react-awesome-slider/dist/styles.css";
-
-const AutoplaySlider = withAutoplay(AwesomeSlider);
+import { useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "../index.css";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 const OffersSlider = ({ offers }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
+  const progressCircle = useRef(null);
+  const progressContent = useRef(null);
+  const onAutoplayTimeLeft = (s, time, progress) => {
+    progressCircle.current.style.setProperty("--progress", 1 - progress);
+    progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+  };
   return (
-    <AutoplaySlider
-      cancelOnInteraction={true}
-      play={true}
-      interval={3000}
-      organicArrows={false}
-      bullets={false}
-      fillParent={false}
-    >
-      {offers
-        .sort((a, b) => a.id - b.id)
-        .map((offer, i) => (
-          <button
-            className="cursor-pointer h-56 shadow-md rounded-lg overflow-hidden w-full"
-            key={i}
-            onClick={() => navigate(`/offers/${offer._id}`)}
-          >
-            <img
-              src={BASE_URL_Img + offer?.image}
-              alt={offer.name}
-              className="h-full w-full object-fill"
-            />
-          </button>
-        ))}
-    </AutoplaySlider>
+    <>
+      <Swiper
+        spaceBetween={30}
+        centeredSlides={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+        }}
+        loop={true}
+        modules={[Autoplay, Pagination, Navigation]}
+        onAutoplayTimeLeft={onAutoplayTimeLeft}
+        className="mySwiper"
+      >
+        {offers
+          .filter((offer) => offer.isActive === true)
+          .sort((a, b) => a.id - b.id)
+          .map((offer, i) => (
+            <SwiperSlide
+              className="h-60 !bg-transparent !px-2"
+              key={i}
+              onClick={() => navigate(`/offers/${offer._id}`)}
+            >
+              <div className="absolute bottom-2 end-3 flex gap-2 py-1 px-3 text-xs rounded-full text-white bg-main">
+                {" "}
+                {offer.sellingPrice ? (
+                  <span>
+                    {offer.sellingPrice} {t("singleProduct:currency")}
+                  </span>
+                ) : null}
+                {t("singleProduct:insteadOf")}
+                {offer.itemPrice ? (
+                  <span>
+                    {offer.itemPrice} {t("singleProduct:currency")}
+                  </span>
+                ) : null}
+              </div>
+              <img
+                src={BASE_URL_Img + offer?.image}
+                alt={offer.name}
+                className="h-full w-full object-contain"
+              />
+            </SwiperSlide>
+          ))}
+        <div className="autoplay-progress" slot="container-end">
+          <svg viewBox="0 0 48 48" ref={progressCircle}>
+            <circle cx="24" cy="24" r="20"></circle>
+          </svg>
+          <span ref={progressContent}></span>
+        </div>
+      </Swiper>
+    </>
   );
 };
-
 export default OffersSlider;

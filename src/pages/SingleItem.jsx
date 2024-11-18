@@ -8,11 +8,13 @@ import { useGlobalContext } from "../context";
 import { BASE_URL_Img } from "../constatns";
 import { Loader } from "../components";
 import { useOffer, useProduct } from "../lib/react-query/queriesAndMutations";
-import AwesomeSlider from "react-awesome-slider";
-import withAutoplay from "react-awesome-slider/dist/autoplay";
-import "react-awesome-slider/dist/styles.css";
-
-const AutoplaySlider = withAutoplay(AwesomeSlider);
+import { useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "../index.css";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 const SingleItem = () => {
   const { productId, offerId } = useParams();
@@ -20,12 +22,17 @@ const SingleItem = () => {
   const { data, isPending: isLoading } = isOffer
     ? useOffer(offerId)
     : useProduct(productId);
-
   const [quantity, setQuantity] = useState(1);
   const { cartData, setCartData, storeData } = useGlobalContext();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   useDarkMode();
+  const progressCircle = useRef(null);
+  const progressContent = useRef(null);
+  const onAutoplayTimeLeft = (s, time, progress) => {
+    progressCircle.current.style.setProperty("--progress", 1 - progress);
+    progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+  };
 
   const add = () => setQuantity((prev) => prev + 1);
   const remove = () => {
@@ -122,16 +129,23 @@ const SingleItem = () => {
                 />
               </div>
             ) : (
-              <AutoplaySlider
-                cancelOnInteraction={true}
-                play={true}
-                interval={3000}
-                organicArrows={false}
-                bullets={false}
-                fillParent={false}
+              <Swiper
+                spaceBetween={30}
+                centeredSlides={true}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                pagination={{
+                  clickable: true,
+                }}
+                loop={true}
+                modules={[Autoplay, Pagination, Navigation]}
+                onAutoplayTimeLeft={onAutoplayTimeLeft}
+                className="mySwiper"
               >
                 {data?.data?.images?.map((img, index) => (
-                  <div key={index} className="w-full h-full">
+                  <SwiperSlide key={index} className="w-full !bg-transparent">
                     <img
                       src={BASE_URL_Img + img}
                       alt={
@@ -139,16 +153,22 @@ const SingleItem = () => {
                           ? data?.data?.enName
                           : data?.data?.name
                       }
-                      className="w-full h-full object-scale-down rounded-lg dark:bg-white"
+                      className="w-full h-full object-contain rounded-lg dark:bg-white"
                     />
-                  </div>
+                  </SwiperSlide>
                 ))}
-              </AutoplaySlider>
+                <div className="autoplay-progress" slot="container-end">
+                  <svg viewBox="0 0 48 48" ref={progressCircle}>
+                    <circle cx="24" cy="24" r="20"></circle>
+                  </svg>
+                  <span ref={progressContent}></span>
+                </div>
+              </Swiper>
             )}
             <h2 className="text-2xl text-main dark:text-white">
               {i18n.language === "en" ? data?.data?.enName : data?.data?.name}
             </h2>
-            <div className="flex gap-2 py-1 px-3 text-xs w-fit mx-auto rounded-full text-white bg-gray-900">
+            <div className="flex gap-2 py-1 px-3 text-xs w-fit mx-auto rounded-full text-white bg-main">
               {data?.data?.sellingPrice ? (
                 <span>
                   {data?.data?.sellingPrice} {t("singleProduct:currency")}
