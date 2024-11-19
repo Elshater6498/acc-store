@@ -71,7 +71,9 @@ const Home = ({ value, setValue }) => {
         />
       </div>
       {offers?.data?.length ? <OffersSlider offers={offers?.data} /> : null}
-      <Categories data={categories?.data} value={value} setValue={setValue} />
+      {categories?.data?.length ? (
+        <Categories data={categories?.data} value={value} setValue={setValue} />
+      ) : null}
       {isSubmitted && (
         <SearchLabel
           filteredItems={filteredItems?.data}
