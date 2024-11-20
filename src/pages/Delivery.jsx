@@ -28,7 +28,7 @@ const Delivery = () => {
 
   const onSubmitToWhatsApp = async (data) => {
     const total = cartData
-      .reduce((acc, item) => acc + item.sellingPrice, 0)
+      .reduce((acc, item) => acc + item.itemPrice, 0)
       .toLocaleString("en-US");
     const date = new Date(Date.now());
     let hours = date.getHours();
@@ -39,10 +39,9 @@ const Delivery = () => {
     minutes = minutes < 10 ? "0" + minutes : minutes;
     const time = `${hours}:${minutes} ${ampm}`;
 
-    const orderTotal = cartData.reduce(
-      (acc, item) => acc + item.sellingPrice,
-      0
-    );
+    const orderTotal = cartData
+      .reduce((acc, item) => acc + item.sellingPrice, 0)
+      .toLocaleString("en-US");
 
     const message = `%0A%2A نوع الطلب %2A%3A توصيل للمنزل %0A%2A اسم العميل %2A%3A ${
       data.name
@@ -54,9 +53,7 @@ const Delivery = () => {
       })
       .join(
         "%0A---------------------------%0A"
-      )}%0A---------------------------%0A%2A مبلغ الطلب %2A%3A ${total} جنيه %0A%2A المجموع %2A%3A ${orderTotal.toLocaleString(
-      "en-US"
-    )} جنيه %0A%2A وقت الطلب %2A%3A ${time}`;
+      )}%0A---------------------------%0A%2A مبلغ الطلب %2A%3A ${total} جنيه %0A%2A المجموع بعد الخصم %2A%3A ${orderTotal} جنيه %0A%2A وقت الطلب %2A%3A ${time}`;
 
     window.open(
       `https://api.whatsapp.com/send?phone=${storeData?.whatsapp}&text=${message}`
