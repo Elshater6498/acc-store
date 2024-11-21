@@ -145,15 +145,15 @@ const SingleItem = () => {
                 className="mySwiper !rounded-lg"
               >
                 {data?.data?.images?.map((img, index) => (
-                  <SwiperSlide key={index} className="">
+                  <SwiperSlide key={index} className="h-96">
                     <img
-                      src={BASE_URL_Img + img}
+                      src={BASE_URL_Img + img.path}
                       alt={
                         i18n.language === "en"
                           ? data?.data?.enName
                           : data?.data?.name
                       }
-                      className="w-full h-full object-contain"
+                      className="h-full w-full object-contain object-top"
                     />
                   </SwiperSlide>
                 ))}

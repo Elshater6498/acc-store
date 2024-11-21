@@ -2,11 +2,6 @@ import { useTranslation } from "react-i18next";
 import { BASE_URL_Img } from "../constatns";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context";
-import AwesomeSlider from "react-awesome-slider";
-import withAutoplay from "react-awesome-slider/dist/autoplay";
-import "react-awesome-slider/dist/styles.css";
-
-const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const Item = ({ item, displayOnly = false }) => {
   const { t, i18n } = useTranslation();
@@ -25,11 +20,11 @@ const Item = ({ item, displayOnly = false }) => {
           className="absolute inset-0 w-full h-full p-0.5 object-cover rounded-lg"
           src={
             displayOnly
-              ? item.images[0] || storeData?.image
+              ? item.images[0]?.path || storeData?.image
                 ? BASE_URL_Img + storeData?.image
                 : "/logo.png"
-              : BASE_URL_Img + item.images[0] || storeData?.image
-              ? BASE_URL_Img + item?.images[0]
+              : BASE_URL_Img + item.images[0]?.path || storeData?.image
+              ? BASE_URL_Img + item?.images[0]?.path
               : "/logo.png"
           }
           alt="item img"

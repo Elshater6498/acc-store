@@ -4,11 +4,6 @@ import { IoRemoveCircleOutline, IoAddCircleOutline } from "react-icons/io5";
 import { FiX } from "react-icons/fi";
 import { useGlobalContext } from "../context";
 import { BASE_URL_Img } from "../constatns";
-import AwesomeSlider from "react-awesome-slider";
-import withAutoplay from "react-awesome-slider/dist/autoplay";
-import "react-awesome-slider/dist/styles.css";
-
-const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 const CartItem = ({ item, done = false }) => {
   const { setCartData } = useGlobalContext();
@@ -51,7 +46,7 @@ const CartItem = ({ item, done = false }) => {
           <div>
             <img
               className="absolute inset-0 w-full h-full p-0.5 object-cover rounded-lg"
-              src={BASE_URL_Img + item.images[0]}
+              src={BASE_URL_Img + item.images[0].path}
               alt={i18n.language === "en" ? item.en_name : item.name}
             />
           </div>
