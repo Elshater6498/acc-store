@@ -53,17 +53,23 @@ const CartItem = ({ item, done = false }) => {
         </div>
         <div className="w-full relative col-span-8 sm:col-span-9 space-y-1 sm:space-y-2 px-2 flex flex-col justify-between">
           <div className="mt-2 text-sm text-main font-semibold dark:text-white">
-            {i18n.language === "en" ? item.en_name : item.name}
+            {i18n.language === "en"
+              ? item.enName?.length > 50
+                ? `${item.enName?.slice(0, 30)}...`
+                : item?.enName
+              : item.name?.length > 50
+              ? `${item.name?.slice(0, 30)}...`
+              : item?.name}
           </div>
           <div className="flex flex-col gap-1">
             <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">
               {i18n.language === "en"
-                ? item.en_details?.length > 50
-                  ? `${item.en_details.slice(0, 50)}...`
-                  : item.en_details
+                ? item.enDetails?.length > 50
+                  ? `${item.enDetails?.slice(0, 30)}...`
+                  : item?.enDetails
                 : item.details?.length > 50
-                ? `${item.details.slice(0, 50)}...`
-                : item.details}
+                ? `${item.details?.slice(0, 30)}...`
+                : item?.details}
             </p>
           </div>
 
