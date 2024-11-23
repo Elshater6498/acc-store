@@ -46,13 +46,14 @@ const SingleItem = () => {
       id: itemData?._id,
       name: itemData?.name,
       en_name: itemData?.enName,
-      images: isOffer ? [itemData?.image] : itemData?.images,
+      images: isOffer ? itemData?.image : itemData?.images,
       details: itemData?.details,
       en_details: itemData?.enDetails,
       quantity,
       itemPrice: itemData?.itemPrice?.toFixed(2) * quantity,
-      sellingPrice: itemData?.sellingPrice?.toFixed(2) * quantity,
+      itemDiscount: itemData?.itemDiscount,
       purchasePrice: itemData?.purchasePrice?.toFixed(2) * quantity,
+      sellingPrice: itemData?.sellingPrice?.toFixed(2) * quantity,
       profitMargin: itemData?.profitMargin?.toFixed(2) * quantity,
     };
 

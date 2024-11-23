@@ -62,7 +62,7 @@ const Options = () => {
         />
       </div>
       <form
-        className="w-full h-full flex flex-col pt-4 gap-3 px-4 bg-white animateItems dark:bg-gray-700"
+        className="w-full h-full flex flex-col justify-center py-[10rem] gap-3 px-4 bg-white animateItems dark:bg-gray-700"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex flex-col">

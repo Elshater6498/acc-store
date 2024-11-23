@@ -4,18 +4,29 @@ import { IoRemoveCircleOutline, IoAddCircleOutline } from "react-icons/io5";
 import { FiX } from "react-icons/fi";
 import { useGlobalContext } from "../context";
 import { BASE_URL_Img } from "../constatns";
+import { useParams } from "react-router-dom";
+import { useOffer, useProduct } from "../lib/react-query/queriesAndMutations";
 
 const CartItem = ({ item, done = false }) => {
-  const { setCartData } = useGlobalContext();
+  const { cartData, setCartData } = useGlobalContext();
   const [oldItemPrice] = useState(item.itemPrice / item.quantity);
+  const [oldPurchasePrice] = useState(item.purchasePrice / item.quantity);
   const [oldSellingPrice] = useState(item.sellingPrice / item.quantity);
+  const [oldProfitMargin] = useState(item.profitMargin / item.quantity);
   const { t, i18n } = useTranslation();
+
+  console.log("====================================");
+  console.log("data", cartData);
+  console.log("item", item);
+  console.log("====================================");
 
   const add = () => {
     setCartData((prev) => {
       ++item.quantity;
       item.itemPrice = oldItemPrice * item.quantity;
+      item.purchasePrice = oldPurchasePrice * item.quantity;
       item.sellingPrice = oldSellingPrice * item.quantity;
+      item.profitMargin = oldProfitMargin * item.quantity;
       return [...prev];
     });
   };
@@ -24,7 +35,9 @@ const CartItem = ({ item, done = false }) => {
     setCartData((prev) => {
       --item.quantity;
       item.itemPrice = oldItemPrice * item.quantity;
+      item.purchasePrice = oldPurchasePrice * item.quantity;
       item.sellingPrice = oldSellingPrice * item.quantity;
+      item.profitMargin = oldProfitMargin * item.quantity;
       return [...prev];
     });
   };
@@ -46,7 +59,10 @@ const CartItem = ({ item, done = false }) => {
           <div>
             <img
               className="absolute inset-0 w-full h-full p-0.5 object-cover rounded-lg"
-              src={BASE_URL_Img + item.images[0].path}
+              src={
+                BASE_URL_Img +
+                (Array.isArray(item.images) ? item.images[0].path : item.images)
+              }
               alt={i18n.language === "en" ? item.en_name : item.name}
             />
           </div>

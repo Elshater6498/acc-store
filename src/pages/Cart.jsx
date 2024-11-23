@@ -13,6 +13,10 @@ const CartPage = () => {
   const { cartData, storeData } = useGlobalContext();
   const { t, i18n } = useTranslation();
 
+  console.log("====================================");
+  console.log("cart data", cartData);
+  console.log("====================================");
+
   return (
     <div
       dir={i18n.language === "en" ? "ltr" : "rtl"}

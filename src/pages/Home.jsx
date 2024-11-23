@@ -38,10 +38,6 @@ const Home = ({ value, setValue }) => {
     categoryID || categories?.data[value]?._id
   );
 
-  console.log("====================================");
-  console.log(products);
-  console.log("====================================");
-
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchQuery(e.target[0].value);

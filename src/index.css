@@ -2,13 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-.awssld__content {
-  background-color: white;
-  padding: 0 1rem;
+input:-webkit-autofill {
+  -webkit-text-fill-color: black;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
-
-.dark .awssld__content {
-  background-color: var(--chakra-colors-gray700);
+.dark input:-webkit-autofill {
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 :root {
@@ -180,7 +184,6 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
 
 .swiper {
   width: 100%;

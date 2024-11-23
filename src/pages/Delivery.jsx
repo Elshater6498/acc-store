@@ -49,7 +49,7 @@ const Delivery = () => {
       data.address
     } %0A---------------------------%0A${cartData
       .map((item) => {
-        return `%2A الصنف %2A%3A ${item.name} %0A%2A الكمية %2A%3A ${item.quantity} %0A%2A السعر %2A%3A ${item.sellingPrice} جنيه %0A%2A السعر بعد الخصم %2A%3A ${item.itemPrice} جنيه  `;
+        return `%2A الصنف %2A%3A ${item.name} %0A%2A الكمية %2A%3A ${item.quantity} %0A%2A السعر %2A%3A ${item.itemPrice} جنيه %0A%2A بعد الخصم %2A%3A ${item.sellingPrice} جنيه`;
       })
       .join(
         "%0A---------------------------%0A"
@@ -61,6 +61,10 @@ const Delivery = () => {
   };
 
   const onSubmit = async (data) => {
+    const totalOfPrice = cartData.reduce(
+      (acc, item) => acc + item.itemPrice,
+      0
+    );
     const totalOfSelling = cartData.reduce(
       (acc, item) => acc + item.sellingPrice,
       0
@@ -83,7 +87,8 @@ const Delivery = () => {
           address: data.address,
         },
         items: cartData,
-        totalsellingPrice: parseFloat(totalOfSelling),
+        totalItemsPrice: parseFloat(totalOfPrice),
+        totalSellingPrice: parseFloat(totalOfSelling),
         totalPurchasePrice: parseFloat(totalOfPurchase),
         totalProfitMargin: parseFloat(totalOfProfit),
         orderType: options.DELIVER_HOME,
@@ -153,7 +158,7 @@ const Delivery = () => {
         />
       </div>
       <form
-        className="w-full h-full flex flex-col justify-end gap-3 px-4 bg-white animateItems dark:bg-gray-700"
+        className="w-full h-full flex flex-col justify-end py-[6rem] gap-3 px-4 bg-white animateItems dark:bg-gray-700"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex flex-col">
@@ -168,7 +173,7 @@ const Delivery = () => {
               id="name"
               autoComplete="off"
               placeholder={t("customerData:name")}
-              className="peer h-8 w-full border-none dark:text-white bg-transparent py-0 px-6 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+              className="peer h-8 w-full border-none dark:text-white bg-transparent autofill:bg-yellow-200 py-0 px-6 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
               {...register("name", {
                 required: { value: true, message: errMessage },
               })}
