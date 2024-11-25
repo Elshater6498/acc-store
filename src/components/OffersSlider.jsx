@@ -15,8 +15,10 @@ const OffersSlider = ({ offers }) => {
   const progressCircle = useRef(null);
   const progressContent = useRef(null);
   const onAutoplayTimeLeft = (s, time, progress) => {
-    progressCircle.current.style.setProperty("--progress", 1 - progress);
-    progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+    if (offers.length > 1) {
+      progressCircle.current.style.setProperty("--progress", 1 - progress);
+      progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+    }
   };
   return (
     <>

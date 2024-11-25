@@ -81,7 +81,7 @@ const App = () => {
             }}
           >
             <div className="bg-black/50 w-full h-full md:flex items-center justify-center">
-              <div className="h-64 w-64 p-4 rounded-full bg-white flex items-center justify-center">
+              <div className="h-64 w-64 rounded-full bg-white flex items-center justify-center">
                 {isLoading ? (
                   <Loader />
                 ) : (
@@ -92,7 +92,7 @@ const App = () => {
                         : "/logo.png"
                     }
                     alt={storeData?.name}
-                    className="object-contain w-32 mx-auto"
+                    className="object-contain"
                   />
                 )}
               </div>

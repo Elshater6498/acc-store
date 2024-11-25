@@ -15,12 +15,12 @@ export default function TopNav({ setSideNav }) {
   return (
     <header className="z-30 transition bg-white duration-200 dark:bg-opacity-300 relative">
       <nav className="z-30 relative App-header absolutee left-0 right-0 text-white">
-        <div className="z-50 w-full max-w-md mx-auto h-16 top-auto rounded-t-4xl py-1 flex items-center justify-between gap-2 dark:bg-gray-700 bg-opacity-50">
-          <div className="col-span-9 grid grid-cols-12 justify-start items-center">
+        <div className="z-50 w-full max-w-md mx-auto h-16 top-auto rounded-t-4xl py-1 flex items-center justify-between gap-3 dark:bg-gray-700 bg-opacity-50">
+          <div className="flex justify-start items-center">
             <Link
               to="/"
-              className={`col-span-10 text-md font-semibold text-gray-500 dark:text-white overflow-y-hidden flex items-center cursor-pointer gap-2 ${
-                i18n.language === "en" ? "pl-4" : "pr-4"
+              className={`text-base font-semibold text-gray-500 dark:text-white overflow-y-hidden flex items-center cursor-pointer gap-2 ${
+                i18n.language === "en" ? "pl-2" : "pr-2"
               }`}
             >
               <img
@@ -33,23 +33,16 @@ export default function TopNav({ setSideNav }) {
                 className=" w-[56px] h-[57px]"
               />
               <h1
-                className={`font-extrabold flex gap-1 flex-col text-md dark:text-main/50`}
+                className={`font-extrabold flex gap-1 flex-col text-base text-main dark:text-main/50 whitespace-nowrap`}
               >
-                <span
-                  className={`inline-block transform translate-y-1 text-main mx-0.5 text-accent`}
-                >
-                  {storeData?.name}
-                </span>
-                <span className="font-extrabold text-md text-main dark:text-main/50 overflow-hidden">
-                  {" "}
-                  {storeData?.enName}
-                </span>
+                <span className="">{storeData?.name}</span>
+                <span className=""> {storeData?.enName}</span>
               </h1>
             </Link>
           </div>
           <div
-            className={`col-span-3 flex justify-end items-center ${
-              i18n.language === "en" ? "mr-4" : "ml-4"
+            className={`flex justify-end items-center  ${
+              i18n.language === "en" ? "mr-1" : "ml-1"
             }`}
           >
             <a
@@ -69,7 +62,7 @@ export default function TopNav({ setSideNav }) {
               {i18n.language === "ar" ? "EN" : "AR"}
             </button>
             <div
-              className="col-span-2 w-10 h-10 p-2 rounded-full text-black transition duration-200 dark:text-gray-100 hover:bg-gray-400 hover:bg-opacity-50 flex justify-center items-center"
+              className="w-10 h-10 p-2 rounded-full text-black transition duration-200 dark:text-gray-100 hover:bg-gray-400 hover:bg-opacity-50 flex justify-center items-center"
               onClick={() => setSideNav(true)}
             >
               <svg

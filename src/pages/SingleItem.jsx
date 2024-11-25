@@ -27,12 +27,6 @@ const SingleItem = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   useDarkMode();
-  const progressCircle = useRef(null);
-  const progressContent = useRef(null);
-  const onAutoplayTimeLeft = (s, time, progress) => {
-    progressCircle.current.style.setProperty("--progress", 1 - progress);
-    progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
-  };
 
   const add = () => setQuantity((prev) => prev + 1);
   const remove = () => {
@@ -71,6 +65,15 @@ const SingleItem = () => {
     }
     setQuantity(1);
     navigate(-1);
+  };
+
+  const progressCircle = useRef(null);
+  const progressContent = useRef(null);
+  const onAutoplayTimeLeft = (s, time, progress) => {
+    if (data?.data?.images?.length > 1) {
+      progressCircle.current.style.setProperty("--progress", 1 - progress);
+      progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+    }
   };
 
   return (
@@ -146,7 +149,7 @@ const SingleItem = () => {
                 className="mySwiper !rounded-lg"
               >
                 {data?.data?.images?.map((img, index) => (
-                  <SwiperSlide key={index} className="h-96">
+                  <SwiperSlide key={index} className="">
                     <img
                       src={BASE_URL_Img + img.path}
                       alt={
@@ -154,7 +157,7 @@ const SingleItem = () => {
                           ? data?.data?.enName
                           : data?.data?.name
                       }
-                      className="h-full w-full object-contain object-top"
+                      className="h-full w-full object-contain"
                     />
                   </SwiperSlide>
                 ))}
