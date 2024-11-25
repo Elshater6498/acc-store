@@ -15,11 +15,6 @@ const CartItem = ({ item, done = false }) => {
   const [oldProfitMargin] = useState(item.profitMargin / item.quantity);
   const { t, i18n } = useTranslation();
 
-  console.log("====================================");
-  console.log("data", cartData);
-  console.log("item", item);
-  console.log("====================================");
-
   const add = () => {
     setCartData((prev) => {
       ++item.quantity;
@@ -67,32 +62,32 @@ const CartItem = ({ item, done = false }) => {
             />
           </div>
         </div>
-        <div className="w-full relative col-span-8 sm:col-span-9 space-y-1 sm:space-y-2 px-2 flex flex-col justify-between">
+        <div className="w-full relative col-span-8 sm:col-span-9 space-y-1 px-2 flex flex-col justify-between">
           <div className="mt-2 text-sm text-main font-semibold dark:text-white">
             {i18n.language === "en"
-              ? item.enName?.length > 50
-                ? `${item.enName?.slice(0, 30)}...`
+              ? item.enName?.length > 30
+                ? `${item.enName?.slice(0, 33)}...`
                 : item?.enName
-              : item.name?.length > 50
-              ? `${item.name?.slice(0, 30)}...`
+              : item.name?.length > 30
+              ? `${item.name?.slice(0, 33)}...`
               : item?.name}
           </div>
           <div className="flex flex-col gap-1">
             <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">
               {i18n.language === "en"
-                ? item.enDetails?.length > 50
-                  ? `${item.enDetails?.slice(0, 30)}...`
+                ? item.enDetails?.length > 30
+                  ? `${item.enDetails?.slice(0, 33)}...`
                   : item?.enDetails
-                : item.details?.length > 50
-                ? `${item.details?.slice(0, 30)}...`
+                : item.details?.length > 30
+                ? `${item.details?.slice(0, 33)}...`
                 : item?.details}
             </p>
           </div>
 
-          <div className="flex justify-between py-2 items-center w-full">
+          <div className="flex flex-col md:flex-row justify-start items-start md:justify-between py-2 md:items-center w-full">
             <div className="flex items-center justify-center gap-2 dark:text-white select-none">
               <IoRemoveCircleOutline
-                className={`text-3xl ${
+                className={`text-2xl md:text-3xl ${
                   item.quantity === 1
                     ? "text-[#0000004d] dark:text-[#9ca3af]"
                     : "text-main"
@@ -101,19 +96,19 @@ const CartItem = ({ item, done = false }) => {
               />
               <span>{item.quantity}</span>
               <IoAddCircleOutline
-                className="text-3xl text-main cursor-pointer"
+                className="text-2xl md:text-3xl text-main cursor-pointer"
                 onClick={add}
               />
             </div>
-            <div className="flex items-center gap-2 dark:text-white">
-              <span className="text-sm flex items-center font-semibold">
+            <div className="flex items-center gap-2 dark:text-white text-xs md:text-sm">
+              <span className="flex items-center gap-1 font-semibold">
                 {item.sellingPrice ? item.sellingPrice : null}
-                <span className="text-main dark:text-white text-xs font-semibold mx-0.5">
+                <span className="text-main dark:text-white text-xs font-semibold">
                   {t("singleProduct:currency")}
                 </span>
               </span>
               {t("singleProduct:insteadOf")}
-              <span className="text-sm flex items-center gap-1 font-semibold">
+              <span className="flex items-center gap-1 font-semibold">
                 {item.itemPrice ? item.itemPrice : null}
                 <span className="text-main dark:text-white text-xs font-semibold">
                   {t("singleProduct:currency")}
