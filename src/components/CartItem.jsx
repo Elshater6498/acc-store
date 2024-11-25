@@ -66,10 +66,10 @@ const CartItem = ({ item, done = false }) => {
           <div className="mt-2 text-sm text-main font-semibold dark:text-white">
             {i18n.language === "en"
               ? item.enName?.length > 30
-                ? `${item.enName?.slice(0, 33)}...`
+                ? `${item.enName?.slice(0, 30)}...`
                 : item?.enName
               : item.name?.length > 30
-              ? `${item.name?.slice(0, 33)}...`
+              ? `${item.name?.slice(0, 30)}...`
               : item?.name}
           </div>
           <div className="flex flex-col gap-1">
