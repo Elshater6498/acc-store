@@ -20,31 +20,39 @@ const Categories = ({ data, setValue }) => {
   if (!categoriesWithItems?.length) return null;
 
   return (
-    <div className="p-2 flex gap-2 overflow-x-auto dark:bg-gray-700 whitespace-nowrap w-full z-[50] inset-0 bg-white shadow-[0_1px_2px_rgb(0,0,0,5%) hide-scrollbar">
+    <div className="p-2 flex gap-3 overflow-x-auto dark:bg-gray-700 whitespace-nowrap w-full z-[50] inset-0 bg-white shadow-[0_1px_2px_rgb(0,0,0,5%) hide-scrollbar">
       {categoriesWithItems?.map((item, i) => (
-        <span
-          className={`inline-flex items-center font-bold h-10 whitespace-nowrap justify-center rounded-full flex-row-reverse gap-2 text-sm px-6 py-1 dark:bg-gray-900 dark:text-white cursor-pointer ${
-            pathname.slice(1) === item._id
-              ? "text-white bg-main dark:bg-main"
-              : "bg-gray-100"
-          }`}
+        <div
+          className={`flex flex-col items-center justify-center gap-2`}
           onClick={() => {
             setValue(i);
             navigate(`/${item._id}`);
           }}
           key={i}
         >
-          <span className="text-xs whitespace-nowrap font-semibold">
+          <div
+            className={`h-16 w-16 dark:bg-white  cursor-pointer rounded-full ${
+              pathname.slice(1) === item._id
+                ? "border-2 border-main dark:border-main"
+                : "bg-gray-100"
+            }`}
+          >
+            <img
+              src={`${item?.image ? BASE_URL_Img + item?.image : "/logo.png"}`}
+              alt={`${i18n.language === "en" ? item?.enName : item?.name}`}
+              className="w-full h-full object-scale-down rounded-full"
+            />
+          </div>
+          <p
+            className={`font-semibold whitespace-nowrap  text-sm dark:bg-gray-900 dark:text-white cursor-pointer py-1 px-2 rounded-full ${
+              pathname.slice(1) === item._id
+                ? "text-white bg-main dark:bg-main"
+                : "bg-gray-100"
+            }`}
+          >
             {i18n.language === "en" ? item?.enName : item?.name}
-          </span>
-          <img
-            src={`${item?.image ? BASE_URL_Img + item?.image : "/logo.png"}`}
-            alt={`${i18n.language === "en" ? item?.enName : item?.name}`}
-            width="24"
-            height="24"
-            className="z-10"
-          />
-        </span>
+          </p>
+        </div>
       ))}
     </div>
   );
