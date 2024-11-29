@@ -33,7 +33,7 @@ export default function TopNav({ setSideNav }) {
                 className=" w-[56px] h-[57px]"
               />
               <h1
-                className={`font-bold flex gap-1 flex-col text-base text-main dark:text-main/50 whitespace-nowrap`}
+                className={`font-bold flex gap-1 flex-col text-[15] text-main dark:text-main/50 whitespace-nowrap`}
               >
                 <span>{storeData?.name}</span>
                 <span> {storeData?.enName}</span>
