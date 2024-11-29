@@ -19,7 +19,7 @@ export default function TopNav({ setSideNav }) {
           <div className="flex justify-start items-center">
             <Link
               to="/"
-              className={`text-base font-semibold text-gray-500 dark:text-white overflow-y-hidden flex items-center cursor-pointer gap-2 ${
+              className={`overflow-y-hidden flex items-center cursor-pointer gap-2 ${
                 i18n.language === "en" ? "pl-2" : "pr-2"
               }`}
             >
@@ -33,10 +33,10 @@ export default function TopNav({ setSideNav }) {
                 className=" w-[56px] h-[57px]"
               />
               <h1
-                className={`font-extrabold flex gap-1 flex-col text-base text-main dark:text-main/50 whitespace-nowrap`}
+                className={`font-extrabold flex gap-1 flex-col text-sm text-main dark:text-main/50 whitespace-nowrap`}
               >
-                <span className="">{storeData?.name}</span>
-                <span className=""> {storeData?.enName}</span>
+                <span>{storeData?.name}</span>
+                <span> {storeData?.enName}</span>
               </h1>
             </Link>
           </div>
