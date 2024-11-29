@@ -30,10 +30,10 @@ export default function TopNav({ setSideNav }) {
                     : "/logo.png"
                 }
                 alt={storeData?.name}
-                className=" w-[53px] h-[53px]"
+                className=" w-[55px] h-[55px]"
               />
               <h1
-                className={`font-bold flex gap-1 flex-col text-base text-main dark:text-main/50 whitespace-nowrap`}
+                className={`font-bold flex gap-1 flex-col text-[15px] text-main dark:text-main/50 whitespace-nowrap`}
               >
                 <span>{storeData?.name}</span>
                 <span> {storeData?.enName}</span>
