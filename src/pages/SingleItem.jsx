@@ -67,15 +67,6 @@ const SingleItem = () => {
     navigate(-1);
   };
 
-  const progressCircle = useRef(null);
-  const progressContent = useRef(null);
-  const onAutoplayTimeLeft = (s, time, progress) => {
-    if (data?.data?.images?.length > 1) {
-      progressCircle.current.style.setProperty("--progress", 1 - progress);
-      progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
-    }
-  };
-
   return (
     <div
       dir={i18n.language === "en" ? "ltr" : "rtl"}
@@ -145,7 +136,6 @@ const SingleItem = () => {
                 }}
                 loop={true}
                 modules={[Autoplay, Pagination, Navigation]}
-                onAutoplayTimeLeft={onAutoplayTimeLeft}
                 className="mySwiper !rounded-lg"
               >
                 {data?.data?.images?.map((img, index) => (
@@ -161,12 +151,6 @@ const SingleItem = () => {
                     />
                   </SwiperSlide>
                 ))}
-                <div className="autoplay-progress" slot="container-end">
-                  <svg viewBox="0 0 48 48" ref={progressCircle}>
-                    <circle cx="24" cy="24" r="20"></circle>
-                  </svg>
-                  <span ref={progressContent}></span>
-                </div>
               </Swiper>
             )}
             <h2 className="text-2xl text-main dark:text-white">
