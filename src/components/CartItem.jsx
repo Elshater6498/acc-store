@@ -66,20 +66,20 @@ const CartItem = ({ item, done = false }) => {
           <div className="mt-2 text-sm text-main font-semibold dark:text-white">
             {i18n.language === "en"
               ? item.enName?.length > 30
-                ? `${item.enName?.slice(0, 30)}...`
+                ? `${item.enName?.slice(0, 25)}...`
                 : item?.enName
               : item.name?.length > 30
-              ? `${item.name?.slice(0, 30)}...`
+              ? `${item.name?.slice(0, 25)}...`
               : item?.name}
           </div>
           <div className="flex flex-col gap-1">
             <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">
               {i18n.language === "en"
                 ? item.enDetails?.length > 30
-                  ? `${item.enDetails?.slice(0, 33)}...`
+                  ? `${item.enDetails?.slice(0, 30)}...`
                   : item?.enDetails
                 : item.details?.length > 30
-                ? `${item.details?.slice(0, 33)}...`
+                ? `${item.details?.slice(0, 30)}...`
                 : item?.details}
             </p>
           </div>
