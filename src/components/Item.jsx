@@ -33,19 +33,19 @@ const Item = ({ item, displayOnly = false }) => {
       <div className="w-full relative col-span-8 sm:col-span-9 space-y-1 sm:space-y-2 px-2 flex flex-col justify-between">
         <h3 className="mt-2 text-sm text-main font-semibold  dark:text-white">
           {i18n.language === "en"
-            ? item.enName?.length > 30
-              ? `${item.enName?.slice(0, 30)}...`
+            ? item.enName?.length > 70
+              ? `${item.enName?.slice(0, 60)}...`
               : item?.enName
-            : item.name?.length > 30
-            ? `${item.name?.slice(0, 30)}...`
+            : item.name?.length > 70
+            ? `${item.name?.slice(0, 60)}...`
             : item?.name}
         </h3>
         <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">
           {i18n.language === "en"
-            ? item.enDetails?.length > 50
+            ? item.enDetails?.length > 30
               ? `${item.enDetails?.slice(0, 30)}...`
               : item?.enDetails
-            : item.details?.length > 50
+            : item.details?.length > 30
             ? `${item.details?.slice(0, 30)}...`
             : item?.details}
         </p>
