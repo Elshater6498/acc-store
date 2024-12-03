@@ -52,7 +52,7 @@ const App = () => {
                 }
               />
               <Route
-                path="/:categoryName"
+                path="/:categoryID"
                 element={<Home value={value} setValue={setValue} />}
               />
               <Route path="/delivery" element={<Delivery />} />
