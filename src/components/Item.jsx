@@ -18,7 +18,7 @@ const Item = ({ item, displayOnly = false }) => {
       <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
         <div>
           <img
-            className="absolute inset-0 w-full h-full p-0.5 rounded-lg object-cover object-top"
+            className="absolute inset-0 w-full h-full p-0.5 rounded-lg object-contain bg-white"
             src={
               displayOnly
                 ? item.images[item.images.length - 1]?.path || storeData?.image
