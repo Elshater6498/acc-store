@@ -53,7 +53,7 @@ const CartItem = ({ item, done = false }) => {
         <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
           <div>
             <img
-              className="absolute inset-0 w-full h-full p-0.5 object-contain bg-white rounded-lg"
+              className="absolute inset-0 w-full h-full p-0.5  rounded-lg object-cover"
               src={
                 BASE_URL_Img +
                 (Array.isArray(item.images)
