@@ -71,9 +71,15 @@ const Home = ({ value, setValue }) => {
         />
       </div>
       {offers?.data?.length ? <OffersSlider offers={offers?.data} /> : null}
-      {categories?.data?.length ? (
-        <Categories data={categories?.data} value={value} setValue={setValue} />
-      ) : null}
+      <div className="sticky top-[125px] z-50">
+        {categories?.data?.length ? (
+          <Categories
+            data={categories?.data}
+            value={value}
+            setValue={setValue}
+          />
+        ) : null}
+      </div>
       {isSubmitted && (
         <SearchLabel
           filteredItems={filteredItems?.data}
