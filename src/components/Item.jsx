@@ -11,14 +11,14 @@ const Item = ({ item, displayOnly = false }) => {
     <Link
       to={`/products/${item._id}`}
       dir={i18n.language === "en" ? "ltr" : "rtl"}
-      className={`w-full h-28 rounded-lg grid grid-cols-12 gap-2 cursor-pointer bg-gray-100 dark:bg-gray-900 ${
+      className={`w-full h-28 rounded-lg grid grid-cols-12 gap-2 cursor-pointer bg-gray-200 dark:bg-gray-900 ${
         displayOnly ? "pointer-events-none" : ""
       }`}
     >
       <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
         <div>
           <img
-            className="absolute inset-0 w-full h-full p-0.5 rounded-lg object-contain bg-white"
+            className="absolute inset-0 w-full h-full p-2 dark:p-0.5 rounded-lg object-contain bg-white"
             src={
               displayOnly
                 ? item.images[item.images.length - 1]?.path || storeData?.image
