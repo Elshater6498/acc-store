@@ -56,7 +56,9 @@ const CartItem = ({ item, done = false }) => {
               className="absolute inset-0 w-full h-full p-0.5 object-cover rounded-lg"
               src={
                 BASE_URL_Img +
-                (Array.isArray(item.images) ? item.images[0].path : item.images)
+                (Array.isArray(item.images)
+                  ? item.images[item.images.length - 1]?.path
+                  : item.images)
               }
               alt={i18n.language === "en" ? item.en_name : item.name}
             />

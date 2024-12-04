@@ -16,19 +16,22 @@ const Item = ({ item, displayOnly = false }) => {
       }`}
     >
       <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
-        <img
-          className="absolute inset-0 w-full h-full p-0.5 object-cover rounded-lg"
-          src={
-            displayOnly
-              ? item.images[0]?.path || storeData?.image
-                ? BASE_URL_Img + storeData?.image
+        <div>
+          <img
+            className="absolute inset-0 w-full h-full p-0.5 object-cover rounded-lg"
+            src={
+              displayOnly
+                ? item.images[item.images.length - 1]?.path || storeData?.image
+                  ? BASE_URL_Img + storeData?.image
+                  : "/logo.png"
+                : BASE_URL_Img + item.images[item.images.length - 1]?.path ||
+                  storeData?.image
+                ? BASE_URL_Img + item?.images[item.images.length - 1]?.path
                 : "/logo.png"
-              : BASE_URL_Img + item.images[0]?.path || storeData?.image
-              ? BASE_URL_Img + item?.images[0]?.path
-              : "/logo.png"
-          }
-          alt="item img"
-        />
+            }
+            alt="item img"
+          />
+        </div>
       </div>
       <div className="w-full relative col-span-8 sm:col-span-9 space-y-1 sm:space-y-2 px-2 flex flex-col justify-between">
         <h3 className="mt-2 text-sm text-main font-semibold  dark:text-white">

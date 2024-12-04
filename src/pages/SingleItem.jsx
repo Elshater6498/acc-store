@@ -138,19 +138,22 @@ const SingleItem = () => {
                 modules={[Autoplay, Pagination, Navigation]}
                 className="mySwiper !rounded-lg"
               >
-                {data?.data?.images?.map((img, index) => (
-                  <SwiperSlide key={index} className="">
-                    <img
-                      src={BASE_URL_Img + img.path}
-                      alt={
-                        i18n.language === "en"
-                          ? data?.data?.enName
-                          : data?.data?.name
-                      }
-                      className="h-full w-full object-contain"
-                    />
-                  </SwiperSlide>
-                ))}
+                {data?.data?.images
+                  ?.slice()
+                  .reverse()
+                  .map((img, index) => (
+                    <SwiperSlide key={index} className="">
+                      <img
+                        src={BASE_URL_Img + img.path}
+                        alt={
+                          i18n.language === "en"
+                            ? data?.data?.enName
+                            : data?.data?.name
+                        }
+                        className="h-full w-full object-contain"
+                      />
+                    </SwiperSlide>
+                  ))}
               </Swiper>
             )}
             <h2 className="text-2xl text-main dark:text-white">
