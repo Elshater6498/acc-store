@@ -131,10 +131,14 @@ const SingleItem = () => {
                   delay: 3000,
                   disableOnInteraction: false,
                 }}
+                scrollbar={{
+                  hide: false,
+                }}
                 pagination={{
                   clickable: true,
                 }}
                 loop={true}
+                autoHeight={true}
                 modules={[Autoplay, Pagination, Navigation]}
                 className="mySwiper !rounded-lg"
               >
