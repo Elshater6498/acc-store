@@ -29,9 +29,9 @@ const OffersSlider = ({ offers }) => {
           delay: 2500,
           disableOnInteraction: false,
         }}
-        pagination={{
-          clickable: true,
-        }}
+      //  pagination={{
+      //    clickable: true,
+       // }}
         loop={true}
         modules={[Autoplay, Pagination, Navigation]}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
