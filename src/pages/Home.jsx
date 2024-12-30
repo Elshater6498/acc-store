@@ -70,7 +70,9 @@ const Home = ({ value, setValue }) => {
           setSearchQuery={setSearchQuery}
         />
       </div>
-      {offers?.data?.length ? <OffersSlider offers={offers?.data} /> : null}
+      {offers?.data?.some((offer) => offer.isActive) ? (
+        <OffersSlider offers={offers?.data} />
+      ) : null}
       <div className="sticky top-[125px] z-50">
         {categories?.data?.length ? (
           <Categories
