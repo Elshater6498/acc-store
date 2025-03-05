@@ -50,6 +50,7 @@ export const en = {
     currency: "EGP",
     kcal: "kcal",
     insteadOf: "Instead Of",
+    save: "Save",
   },
   customerData: {
     name: "Name",

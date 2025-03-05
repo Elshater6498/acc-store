@@ -49,6 +49,7 @@ export const ar = {
     currency: "جنيه",
     kcal: "سعرة حرارية",
     insteadOf: "بدلا من",
+    save: "توفير",
   },
   customerData: {
     name: "الاسم",

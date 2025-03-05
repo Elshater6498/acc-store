@@ -11,10 +11,19 @@ const Item = ({ item, displayOnly = false }) => {
     <Link
       to={`/products/${item._id}`}
       dir={i18n.language === "en" ? "ltr" : "rtl"}
-      className={`w-full h-28 rounded-lg grid grid-cols-12 gap-2 cursor-pointer bg-gray-100 dark:bg-gray-900 ${
+      className={`relative w-full h-28 rounded-lg grid grid-cols-12 gap-2 cursor-pointer bg-gray-100 dark:bg-gray-900 ${
         displayOnly ? "pointer-events-none" : ""
       }`}
     >
+      {item.itemDiscount && item.itemDiscount > 0 && (
+        <div
+          className={`absolute top-1 ${
+            i18n.language === "en" ? "right-1" : "left-1"
+          } bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md transform -rotate-12 z-10`}
+        >
+          - {item.itemDiscount}%
+        </div>
+      )}
       <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
         <div>
           <img
@@ -33,33 +42,27 @@ const Item = ({ item, displayOnly = false }) => {
           />
         </div>
       </div>
-      <div className="w-full relative col-span-8 sm:col-span-9 space-y-1 sm:space-y-2 px-2 flex flex-col justify-between">
-        <h3 className="mt-2 text-sm text-main font-semibold  dark:text-white">
+      <div className="w-full relative col-span-8 sm:col-span-9 px-2 flex flex-col justify-evenly">
+        <h3 className="text-sm text-main font-semibold dark:text-white">
           {i18n.language === "en"
-            ? item.enName?.length > 30
-              ? `${item.enName?.slice(0, 50)}...`
+            ? item.enName?.length > 70
+              ? `${item.enName?.slice(0, 70)}...`
               : item?.enName
-            : item.name?.length > 30
-            ? `${item.name?.slice(0, 50)}...`
+            : item.name?.length > 70
+            ? `${item.name?.slice(0, 70)}...`
             : item?.name}
         </h3>
         <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">
           {i18n.language === "en"
-            ? item.enDetails?.length > 30
-              ? `${item.enDetails?.slice(0, 30)}...`
+            ? item.enDetails?.length > 70
+              ? `${item.enDetails?.slice(0, 70)}...`
               : item?.enDetails
-            : item.details?.length > 30
-            ? `${item.details?.slice(0, 30)}...`
+            : item.details?.length > 70
+            ? `${item.details?.slice(0, 70)}...`
             : item?.details}
         </p>
-        <div className="flex justify-end items-center gap-2 w-full py-2 dark:text-white">
-          <span className="text-sm flex items-center gap-1 font-semibold">
-            {item.sellingPrice}
-            <span className="text-main dark:text-white text-xs font-semibold">
-              {t("singleProduct:currency")}
-            </span>
-          </span>
-          {t("singleProduct:insteadOf")}
+
+        <div className="flex justify-end items-center w-full dark:text-white">
           <span className="text-sm flex items-center gap-1 font-semibold">
             {item.itemPrice}
             <span className="text-main dark:text-white text-xs font-semibold">

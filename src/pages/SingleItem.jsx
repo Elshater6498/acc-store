@@ -8,7 +8,6 @@ import { useGlobalContext } from "../context";
 import { BASE_URL_Img } from "../constatns";
 import { Loader } from "../components";
 import { useOffer, useProduct } from "../lib/react-query/queriesAndMutations";
-import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -112,7 +111,7 @@ const SingleItem = () => {
         <div className="p-4 rounded-lg bg-white dark:bg-gray-700 flex flex-col w-full pt-16">
           <div className="flex flex-col justify-center text-center gap-4 mb-12 mt-5 dark:text-white">
             {isOffer ? (
-              <div className="w-full h-full">
+              <div className="w-full h-full relative">
                 <img
                   src={BASE_URL_Img + data?.data?.image}
                   alt={
@@ -122,6 +121,15 @@ const SingleItem = () => {
                   }
                   className="w-full h-full object-scale-down rounded-lg dark:bg-white"
                 />
+                {data?.data?.itemDiscount && data?.data?.itemDiscount > 0 && (
+                  <div
+                    className={`absolute top-2 ${
+                      i18n.language === "en" ? "left-2" : "right-2"
+                    } bg-red-500 text-white text-sm font-bold px-3 py-1.5 rounded-md shadow-md transform -rotate-12 z-10`}
+                  >
+                    - {data?.data?.itemDiscount}%
+                  </div>
+                )}
               </div>
             ) : (
               <Swiper
@@ -140,8 +148,17 @@ const SingleItem = () => {
                 loop={true}
                 autoHeight={true}
                 modules={[Autoplay, Pagination, Navigation]}
-                className="mySwiper !rounded-lg"
+                className="mySwiper !rounded-lg relative"
               >
+                {data?.data?.itemDiscount && data?.data?.itemDiscount > 0 && (
+                  <div
+                    className={`absolute top-2 ${
+                      i18n.language === "en" ? "left-2" : "right-2"
+                    } bg-red-500 text-white text-sm font-bold px-3 py-1.5 rounded-md shadow-md transform -rotate-12 z-10`}
+                  >
+                    - {data?.data?.itemDiscount}%
+                  </div>
+                )}
                 {data?.data?.images
                   ?.slice()
                   .reverse()
@@ -163,19 +180,23 @@ const SingleItem = () => {
             <h2 className="text-2xl text-main dark:text-white">
               {i18n.language === "en" ? data?.data?.enName : data?.data?.name}
             </h2>
-            <div className="flex gap-2 py-1 px-3 text-xs w-fit mx-auto rounded-full text-white bg-main">
-              {data?.data?.sellingPrice ? (
-                <span>
-                  {data?.data?.sellingPrice} {t("singleProduct:currency")}
-                </span>
-              ) : null}
-              {t("singleProduct:insteadOf")}
-              {data?.data?.itemPrice ? (
-                <span>
-                  {data?.data?.itemPrice} {t("singleProduct:currency")}
-                </span>
-              ) : null}
-            </div>
+            {data?.data?.itemDiscount && (
+              <div className="flex flex-col items-center gap-1">
+                <div className="flex items-center gap-2 py-1 px-4 text-base font-semibold w-fit mx-auto rounded-full text-white bg-main">
+                  <span>
+                    {data?.data?.purchasePrice} {t("singleProduct:currency")}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1 text-sm text-gray-500">
+                  <span className="line-through">
+                    {data?.data?.itemPrice} {t("singleProduct:currency")}
+                  </span>
+                  <span className="text-red-500 font-medium">
+                    ({t("singleProduct:save")} {data?.data?.itemDiscount}%)
+                  </span>
+                </div>
+              </div>
+            )}
             <p className="text-gray-700 dark:text-gray-200 text-base">
               {i18n.language === "en"
                 ? data?.data?.enDetails
@@ -211,7 +232,13 @@ const SingleItem = () => {
             </span>
             {data ? (
               <span className="text-md font-semibold whitespace-nowrap">
-                {data?.data?.sellingPrice * quantity}{" "}
+                {data?.data?.itemDiscount && data?.data?.itemDiscount > 0
+                  ? Math.round(
+                      data?.data?.itemPrice *
+                        (1 - data?.data?.itemDiscount / 100) *
+                        quantity
+                    )
+                  : data?.data?.sellingPrice * quantity}{" "}
                 {t("singleProduct:currency")}
               </span>
             ) : null}
