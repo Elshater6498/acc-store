@@ -45,11 +45,11 @@ const Item = ({ item, displayOnly = false }) => {
       <div className="w-full relative col-span-8 sm:col-span-9 px-1 flex flex-col justify-evenly">
         <h3 className="text-sm text-main font-semibold dark:text-white">
           {i18n.language === "en"
-            ? item.enName?.length > 70
-              ? `${item.enName?.slice(0, 70)}...`
+            ? item.enName?.length > 60
+              ? `${item.enName?.slice(0, 60)}...`
               : item?.enName
-            : item.name?.length > 70
-            ? `${item.name?.slice(0, 70)}...`
+            : item.name?.length > 60
+            ? `${item.name?.slice(0, 60)}...`
             : item?.name}
         </h3>
         <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">

@@ -49,7 +49,7 @@ const Delivery = () => {
       data.address
     } %0A---------------------------%0A${cartData
       .map((item) => {
-        return `%2A الصنف %2A%3A ${item.name} %0A%2A الكمية %2A%3A ${item.quantity} %0A%2A السعر %2A%3A ${item.itemPrice} جنيه %0A%2A بعد الخصم %2A%3A ${item.sellingPrice} جنيه`;
+        return `%2A الصنف %2A%3A ${item.name} %0A%2A الكمية %2A%3A ${item.quantity} %0A%2A السعر %2A%3A ${item.itemPrice} جنيه %0A%2A نسبة الخصم %2A%3A ${item.itemDiscount} %0A%2A بعد الخصم %2A%3A ${item.purchasePrice} جنيه`;
       })
       .join(
         "%0A---------------------------%0A"
