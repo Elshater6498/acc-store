@@ -42,7 +42,7 @@ const Item = ({ item, displayOnly = false }) => {
           />
         </div>
       </div>
-      <div className="w-full relative col-span-8 sm:col-span-9 px-2 flex flex-col justify-evenly">
+      <div className="w-full relative col-span-8 sm:col-span-9 px-1 flex flex-col justify-evenly">
         <h3 className="text-sm text-main font-semibold dark:text-white">
           {i18n.language === "en"
             ? item.enName?.length > 70
@@ -62,12 +62,13 @@ const Item = ({ item, displayOnly = false }) => {
             : item?.details}
         </p>
 
-        <div className="flex justify-end items-center w-full dark:text-white">
-          <span className="text-sm flex items-center gap-1 font-semibold">
-            {item.itemPrice}
-            <span className="text-main dark:text-white text-xs font-semibold">
-              {t("singleProduct:currency")}
-            </span>
+        <div className="flex justify-end items-center w-full dark:text-white gap-2 text-xs font-semibold">
+          <span className="line-through">
+            {item.itemPrice} {t("singleProduct:currency")}
+          </span>
+          <span>{t("singleProduct:afterDiscount")}</span>
+          <span className="">
+            {item.purchasePrice} {t("singleProduct:currency")}
           </span>
         </div>
       </div>

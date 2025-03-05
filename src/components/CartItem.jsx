@@ -49,7 +49,16 @@ const CartItem = ({ item, done = false }) => {
 
   return (
     <div className={`w-full ${done ? "pointer-events-none" : ""}`}>
-      <div className="w-full h-28 rounded-lg grid grid-cols-12 gap-2 cursor-pointer bg-gray-100 dark:bg-gray-900">
+      <div className="relative w-full h-28 rounded-lg grid grid-cols-12 gap-2 cursor-pointer bg-gray-100 dark:bg-gray-900">
+        {item.itemDiscount && item.itemDiscount > 0 && (
+          <div
+            className={`absolute top-3 ${
+              i18n.language === "en" ? "right-1" : "left-1"
+            } bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md transform -rotate-12 z-10`}
+          >
+            - {item.itemDiscount}%
+          </div>
+        )}
         <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
           <div>
             <img
@@ -102,19 +111,13 @@ const CartItem = ({ item, done = false }) => {
                 onClick={add}
               />
             </div>
-            <div className="flex items-center gap-2 dark:text-white text-xs md:text-sm">
-              <span className="flex items-center gap-1 font-semibold">
-                {item.sellingPrice ? item.sellingPrice : null}
-                <span className="text-main dark:text-white text-xs font-semibold">
-                  {t("singleProduct:currency")}
-                </span>
+            <div className="flex justify-end items-center w-full dark:text-white gap-2 text-xs font-semibold">
+              <span className="line-through">
+                {item.itemPrice} {t("singleProduct:currency")}
               </span>
-              {t("singleProduct:insteadOf")}
-              <span className="flex items-center gap-1 font-semibold">
-                {item.itemPrice ? item.itemPrice : null}
-                <span className="text-main dark:text-white text-xs font-semibold">
-                  {t("singleProduct:currency")}
-                </span>
+              <span>{t("singleProduct:afterDiscount")}</span>
+              <span className="">
+                {item.purchasePrice} {t("singleProduct:currency")}
               </span>
             </div>
             {!done && (

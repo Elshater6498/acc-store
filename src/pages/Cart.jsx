@@ -13,10 +13,6 @@ const CartPage = () => {
   const { cartData, storeData } = useGlobalContext();
   const { t, i18n } = useTranslation();
 
-  console.log("====================================");
-  console.log("cart data", cartData);
-  console.log("====================================");
-
   return (
     <div
       dir={i18n.language === "en" ? "ltr" : "rtl"}
@@ -89,16 +85,16 @@ const CartPage = () => {
               {t("cart:total")}
             </p>
             <div className="flex items-center gap-2 dark:text-white">
-              <div className="flex items-center font-semibold gap-1">
+              <div className="flex items-center font-semibold gap-1 line-through">
                 <span className="text-main dark:text-white text-lg font-semibold">
-                  {cartData.reduce((acc, item) => acc + item.sellingPrice, 0)}
+                  {cartData.reduce((acc, item) => acc + item.itemPrice, 0)}
                 </span>
                 {t("singleProduct:currency")}
               </div>
-              {t("singleProduct:insteadOf")}
+              {t("singleProduct:afterDiscount")}
               <div className="flex items-center font-semibold gap-1">
                 <span className="text-main dark:text-white text-lg font-semibold">
-                  {cartData.reduce((acc, item) => acc + item.itemPrice, 0)}
+                  {cartData.reduce((acc, item) => acc + item.purchasePrice, 0)}
                 </span>
                 {t("singleProduct:currency")}
               </div>

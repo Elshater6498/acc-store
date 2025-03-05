@@ -180,23 +180,15 @@ const SingleItem = () => {
             <h2 className="text-2xl text-main dark:text-white">
               {i18n.language === "en" ? data?.data?.enName : data?.data?.name}
             </h2>
-            {data?.data?.itemDiscount && (
-              <div className="flex flex-col items-center gap-1">
-                <div className="flex items-center gap-2 py-1 px-4 text-base font-semibold w-fit mx-auto rounded-full text-white bg-main">
-                  <span>
-                    {data?.data?.purchasePrice} {t("singleProduct:currency")}
-                  </span>
-                </div>
-                <div className="flex items-center gap-1 text-sm text-gray-500">
-                  <span className="line-through">
-                    {data?.data?.itemPrice} {t("singleProduct:currency")}
-                  </span>
-                  <span className="text-red-500 font-medium">
-                    ({t("singleProduct:save")} {data?.data?.itemDiscount}%)
-                  </span>
-                </div>
-              </div>
-            )}
+            <div className="flex items-center gap-2 px-4 text-base font-semibold w-fit mx-auto rounded-full text-white bg-main">
+              <span className="line-through text-gray-600">
+                {data?.data?.itemPrice} {t("singleProduct:currency")}
+              </span>
+              <span>{t("singleProduct:afterDiscount")}</span>
+              <span className="">
+                {data?.data?.purchasePrice} {t("singleProduct:currency")}
+              </span>
+            </div>
             <p className="text-gray-700 dark:text-gray-200 text-base">
               {i18n.language === "en"
                 ? data?.data?.enDetails
