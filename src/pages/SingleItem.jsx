@@ -22,7 +22,7 @@ const SingleItem = () => {
     ? useOffer(offerId)
     : useProduct(productId);
   const [quantity, setQuantity] = useState(1);
-  const { cartData, setCartData, storeData } = useGlobalContext();
+  const { addToCart, storeData } = useGlobalContext();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   useDarkMode();
@@ -33,37 +33,12 @@ const SingleItem = () => {
     setQuantity((prev) => prev - 1);
   };
 
-  const addToCart = () => {
-    const itemData = data?.data;
-    const newCartItem = {
-      id: itemData?._id,
-      name: itemData?.name,
-      en_name: itemData?.enName,
-      images: isOffer ? itemData?.image : itemData?.images,
-      details: itemData?.details,
-      en_details: itemData?.enDetails,
-      quantity,
-      itemPrice: itemData?.itemPrice?.toFixed(2) * quantity,
-      itemDiscount: itemData?.itemDiscount,
-      purchasePrice: itemData?.purchasePrice?.toFixed(2) * quantity,
-      sellingPrice: itemData?.sellingPrice?.toFixed(2) * quantity,
-      profitMargin: itemData?.profitMargin?.toFixed(2) * quantity,
-    };
-
-    const existingItemIndex = cartData.findIndex(
-      (item) => item.id === newCartItem.id && item.name === newCartItem.name
-    );
-    if (existingItemIndex !== -1) {
-      cartData[existingItemIndex].quantity += newCartItem.quantity;
-      cartData[existingItemIndex].sellingPrice += newCartItem.sellingPrice;
-      cartData[existingItemIndex].purchasePrice += newCartItem.purchasePrice;
-      cartData[existingItemIndex].profitMargin += newCartItem.profitMargin;
-      setCartData([...cartData]);
-    } else {
-      setCartData([...cartData, newCartItem]);
+  const handleAddToCart = () => {
+    if (data?.data) {
+      addToCart(data.data, quantity);
+      setQuantity(1);
+      navigate(-1);
     }
-    setQuantity(1);
-    navigate(-1);
   };
 
   return (
@@ -217,7 +192,7 @@ const SingleItem = () => {
           </div>
           <button
             className="font-semibold flex items-center justify-center bg-main text-white rounded-full gap-2 border-2 border-main py-2 px-4 w-full "
-            onClick={addToCart}
+            onClick={handleAddToCart}
           >
             <span className="flex items-center gap-2">
               <IoMdAddCircle className="text-2xl text-white" /> {t("cart:add")}

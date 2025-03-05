@@ -52,10 +52,10 @@ export const ar = {
     afterDiscount: "بعد الخصم",
   },
   customerData: {
-    name: "الاسم",
+    name: "اسم الصيدلية",
     address: "العنوان",
     PhoneNumber: "رقم الهاتف",
-    delivery: "التوصيل الي المنزل",
+    delivery: "التوصيل الي الصيدلية",
     branchReceipt: "الاستلام من الفرع",
     deliveryFees: "يتم تحديد رسوم التوصيل من الفرع",
     freeDelivery: "التوصيل مجانى",

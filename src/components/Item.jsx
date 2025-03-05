@@ -2,10 +2,19 @@ import { useTranslation } from "react-i18next";
 import { BASE_URL_Img } from "../constatns";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context";
+import { FaCartPlus } from "react-icons/fa";
 
-const Item = ({ item, displayOnly = false }) => {
+const Item = ({ item, displayOnly = false, onAddToCart }) => {
   const { t, i18n } = useTranslation();
   const { storeData } = useGlobalContext();
+
+  const handleAddToCart = (e) => {
+    if (onAddToCart && !displayOnly) {
+      e.preventDefault(); // Prevent navigation to product detail
+      e.stopPropagation(); // Stop event propagation
+      onAddToCart(item, 1); // Pass the item and quantity 1
+    }
+  };
 
   return (
     <Link
@@ -62,14 +71,21 @@ const Item = ({ item, displayOnly = false }) => {
             : item?.details}
         </p>
 
-        <div className="flex justify-end items-center w-full dark:text-white gap-2 text-xs font-semibold">
-          <span className="line-through">
-            {item.itemPrice} {t("singleProduct:currency")}
-          </span>
-          <span>{t("singleProduct:afterDiscount")}</span>
-          <span className="">
-            {item.purchasePrice} {t("singleProduct:currency")}
-          </span>
+        <div className="flex justify-between items-center w-full">
+          <FaCartPlus
+            className="text-main dark:text-white cursor-pointer hover:scale-110 transition-transform"
+            size={18}
+            onClick={handleAddToCart}
+          />
+          <div className="flex items-center dark:text-white gap-2 text-xs font-semibold">
+            <span className="line-through">
+              {item.itemPrice} {t("singleProduct:currency")}
+            </span>
+            <span>{t("singleProduct:afterDiscount")}</span>
+            <span className="">
+              {item.purchasePrice} {t("singleProduct:currency")}
+            </span>
+          </div>
         </div>
       </div>
     </Link>

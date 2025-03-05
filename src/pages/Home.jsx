@@ -31,7 +31,7 @@ const Home = ({ value, setValue }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const { data: filteredItems } = useProductsSearch(searchValue);
   const { t } = useTranslation();
-  const { storeData } = useGlobalContext();
+  const { storeData, addToCart } = useGlobalContext();
   const { data: categories } = useCategories();
   const { data: offers } = useOffers();
   const { data: products, isPending: isLoading } = useProductsByCategoryID(
@@ -114,12 +114,16 @@ const Home = ({ value, setValue }) => {
           ) : (
             filteredItems?.data
               ?.filter((product) => product.isActive === true)
-              .map((item, i) => <Item item={item} key={i} />)
+              .map((item, i) => (
+                <Item item={item} key={i} onAddToCart={addToCart} />
+              ))
           )
         ) : products?.data?.length ? (
           products?.data
             ?.filter((product) => product.isActive === true)
-            .map((item, i) => <Item item={item} key={i} />)
+            .map((item, i) => (
+              <Item item={item} key={i} onAddToCart={addToCart} />
+            ))
         ) : (
           <div className="w-full flex items-center font-semibold gap-4 justify-center flex-col my-16 dark:text-white">
             <img
