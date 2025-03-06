@@ -97,6 +97,6 @@ export const en = {
   },
   topNav: {
     welcomeMessage:
-      "Hello,💕 Welcome to our WhatsApp for beauty products 🛍✨ If you need anything or have any questions, we’re here to help you 💄🌸 Tell us, what are you looking for? 😊",
+      "With Derma Store, you will find difference, confidence and distinction. You will enjoy a better experience and be with you all the time. Go ahead and order everything you need ❤🙏",
   },
 };
