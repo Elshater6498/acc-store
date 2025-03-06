@@ -43,7 +43,7 @@ const Delivery = () => {
       .reduce((acc, item) => acc + item.sellingPrice, 0)
       .toLocaleString("en-US");
 
-    const message = `%0A%2A نوع الطلب %2A%3A توصيل للمنزل %0A%2A اسم العميل %2A%3A ${
+    const message = `%0A%2A نوع الطلب %2A%3A توصيل للصيدلية %0A%2A اسم العميل %2A%3A ${
       data.name
     } %0A%2A رقم العميل %2A%3A ${data.phone} %0A%2A عنوان العميل %2A%3A ${
       data.address
