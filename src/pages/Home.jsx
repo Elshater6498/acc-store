@@ -13,12 +13,10 @@ import {
 } from "../components";
 import {
   useCategories,
-  useOffers,
   useProductsByCategoryID,
   useProductsSearch,
 } from "../lib/react-query/queriesAndMutations";
 import { useParams } from "react-router-dom";
-import OffersSlider from "../components/OffersSlider";
 
 const Home = ({ value, setValue }) => {
   const inputRef = useRef();
@@ -33,7 +31,7 @@ const Home = ({ value, setValue }) => {
   const { t } = useTranslation();
   const { storeData, addToCart } = useGlobalContext();
   const { data: categories } = useCategories();
-  const { data: offers } = useOffers();
+  // const { data: offers } = useOffers();
   const { data: products, isPending: isLoading } = useProductsByCategoryID(
     categoryID || categories?.data[value]?._id
   );
@@ -70,9 +68,9 @@ const Home = ({ value, setValue }) => {
           setSearchQuery={setSearchQuery}
         />
       </div>
-      {offers?.data?.some((offer) => offer.isActive) ? (
+      {/* {offers?.data?.some((offer) => offer.isActive) ? (
         <OffersSlider offers={offers?.data} />
-      ) : null}
+      ) : null} */}
       <div className="sticky top-[125px] z-50">
         {categories?.data?.length ? (
           <Categories

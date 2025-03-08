@@ -38,14 +38,19 @@ const Item = ({ item, displayOnly = false, onAddToCart }) => {
           <img
             className="absolute inset-0 w-full h-full p-0.5 rounded-lg object-cover"
             src={
-              displayOnly
-                ? item.images[item.images.length - 1]?.path || storeData?.image
+              item.images.length === 0
+                ? "/logo.jpg"
+                : displayOnly
+                ? item.images[item.images.length - 1]?.path
+                  ? BASE_URL_Img + item.images[item.images.length - 1]?.path
+                  : storeData?.image
                   ? BASE_URL_Img + storeData?.image
-                  : "/logo.png"
-                : BASE_URL_Img + item.images[item.images.length - 1]?.path ||
-                  storeData?.image
-                ? BASE_URL_Img + item?.images[item.images.length - 1]?.path
-                : "/logo.png"
+                  : "/logo.jpg"
+                : item.images[item.images.length - 1]?.path
+                ? BASE_URL_Img + item.images[item.images.length - 1]?.path
+                : storeData?.image
+                ? BASE_URL_Img + storeData?.image
+                : "/logo.jpg"
             }
             alt="item img"
           />

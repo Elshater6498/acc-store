@@ -5,7 +5,7 @@ import { FiX } from "react-icons/fi";
 import { useGlobalContext } from "../context";
 import { BASE_URL_Img } from "../constatns";
 import { useParams } from "react-router-dom";
-import { useOffer, useProduct } from "../lib/react-query/queriesAndMutations";
+import { useProduct } from "../lib/react-query/queriesAndMutations";
 
 const CartItem = ({ item, done = false }) => {
   const { cartData, setCartData } = useGlobalContext();
@@ -64,36 +64,41 @@ const CartItem = ({ item, done = false }) => {
             <img
               className="absolute inset-0 w-full h-full p-0.5  rounded-lg object-cover"
               src={
-                BASE_URL_Img +
-                (Array.isArray(item.images)
-                  ? item.images[item.images.length - 1]?.path
-                  : item.images)
+                Array.isArray(item.images) && item.images.length > 0
+                  ? BASE_URL_Img + item.images[item.images.length - 1]?.path
+                  : typeof item.images === "string"
+                  ? BASE_URL_Img + item.images
+                  : "/logo.jpg"
               }
               alt={i18n.language === "en" ? item.en_name : item.name}
             />
           </div>
         </div>
         <div className="w-full relative col-span-8 sm:col-span-9 space-y-1 px-2 flex flex-col justify-between">
-          <div className="mt-2 text-sm text-main font-semibold dark:text-white">
-            {i18n.language === "en"
-              ? item.enName?.length > 30
-                ? `${item.enName?.slice(0, 25)}...`
-                : item?.enName
-              : item.name?.length > 30
-              ? `${item.name?.slice(0, 25)}...`
-              : item?.name}
-          </div>
-          <div className="flex flex-col gap-1">
-            <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">
+          {(item.name || item.enName) && (
+            <div className="mt-2 text-sm text-main font-semibold dark:text-white">
               {i18n.language === "en"
-                ? item.enDetails?.length > 30
-                  ? `${item.enDetails?.slice(0, 30)}...`
-                  : item?.enDetails
-                : item.details?.length > 30
-                ? `${item.details?.slice(0, 30)}...`
-                : item?.details}
-            </p>
-          </div>
+                ? item.enName?.length > 30
+                  ? `${item.enName?.slice(0, 25)}...`
+                  : item?.enName
+                : item.name?.length > 30
+                ? `${item.name?.slice(0, 25)}...`
+                : item?.name}
+            </div>
+          )}
+          {(item.details || item.enDetails) && (
+            <div className="flex flex-col gap-1">
+              <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">
+                {i18n.language === "en"
+                  ? item.enDetails?.length > 30
+                    ? `${item.enDetails?.slice(0, 30)}...`
+                    : item?.enDetails
+                  : item.details?.length > 30
+                  ? `${item.details?.slice(0, 30)}...`
+                  : item?.details}
+              </p>
+            </div>
+          )}
 
           <div className="flex flex-col md:flex-row justify-start items-start md:justify-between py-2 md:items-center w-full">
             <div className="flex items-center justify-center gap-2 dark:text-white select-none">
