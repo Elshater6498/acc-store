@@ -13,8 +13,6 @@ const CartItem = ({ item, done = false }) => {
   const [oldProfitMargin] = useState(item.profitMargin / item.quantity);
   const { t, i18n } = useTranslation();
 
-  console.log(item);
-
   const add = () => {
     setCartData((prev) => {
       ++item.quantity;

@@ -31,7 +31,6 @@ const App = () => {
     }
   }, [storeData]);
   const cover = `${BASE_URL_Img + storeData?.cover?.replaceAll("\\", "/")}`;
-  console.log(cover);
   return (
     <>
       <Router>
