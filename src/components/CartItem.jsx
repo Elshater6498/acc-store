@@ -4,16 +4,16 @@ import { IoRemoveCircleOutline, IoAddCircleOutline } from "react-icons/io5";
 import { FiX } from "react-icons/fi";
 import { useGlobalContext } from "../context";
 import { BASE_URL_Img } from "../constatns";
-import { useParams } from "react-router-dom";
-import { useProduct } from "../lib/react-query/queriesAndMutations";
 
 const CartItem = ({ item, done = false }) => {
-  const { cartData, setCartData } = useGlobalContext();
+  const { setCartData } = useGlobalContext();
   const [oldItemPrice] = useState(item.itemPrice / item.quantity);
   const [oldPurchasePrice] = useState(item.purchasePrice / item.quantity);
   const [oldSellingPrice] = useState(item.sellingPrice / item.quantity);
   const [oldProfitMargin] = useState(item.profitMargin / item.quantity);
   const { t, i18n } = useTranslation();
+
+  console.log(item);
 
   const add = () => {
     setCartData((prev) => {
@@ -75,24 +75,24 @@ const CartItem = ({ item, done = false }) => {
           </div>
         </div>
         <div className="w-full relative col-span-8 sm:col-span-9 space-y-1 px-2 flex flex-col justify-between">
-          {(item.name || item.enName) && (
+          {(item.name || item.en_name) && (
             <div className="mt-2 text-sm text-main font-semibold dark:text-white">
               {i18n.language === "en"
-                ? item.enName?.length > 30
-                  ? `${item.enName?.slice(0, 25)}...`
-                  : item?.enName
+                ? item.en_name?.length > 30
+                  ? `${item.en_name?.slice(0, 25)}...`
+                  : item?.en_name
                 : item.name?.length > 30
                 ? `${item.name?.slice(0, 25)}...`
                 : item?.name}
             </div>
           )}
-          {(item.details || item.enDetails) && (
+          {(item.details || item.en_details) && (
             <div className="flex flex-col gap-1">
               <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">
                 {i18n.language === "en"
-                  ? item.enDetails?.length > 30
-                    ? `${item.enDetails?.slice(0, 30)}...`
-                    : item?.enDetails
+                  ? item.en_details?.length > 30
+                    ? `${item.en_details?.slice(0, 30)}...`
+                    : item?.en_details
                   : item.details?.length > 30
                   ? `${item.details?.slice(0, 30)}...`
                   : item?.details}
