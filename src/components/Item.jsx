@@ -59,21 +59,31 @@ const Item = ({ item, displayOnly = false, onAddToCart }) => {
       <div className="w-full relative col-span-8 sm:col-span-9 px-1 flex flex-col justify-evenly">
         <h3 className="text-sm text-main font-semibold dark:text-white">
           {i18n.language === "en"
-            ? item.enName?.length > 50
-              ? `${item.enName?.slice(0, 50)}...`
-              : item?.enName
-            : item.name?.length > 50
-            ? `${item.name?.slice(0, 50)}...`
-            : item?.name}
+            ? item.enName && item.enName !== "undefined"
+              ? item.enName?.length > 50
+                ? `${item.enName?.slice(0, 50)}...`
+                : item?.enName
+              : ""
+            : item.name && item.name !== "undefined"
+            ? item.name?.length > 50
+              ? `${item.name?.slice(0, 50)}...`
+              : item?.name
+            : ""}
         </h3>
         <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">
-          {i18n.language === "en"
-            ? item.enDetails?.length > 70
-              ? `${item.enDetails?.slice(0, 70)}...`
-              : item?.enDetails
-            : item.details?.length > 70
-            ? `${item.details?.slice(0, 70)}...`
-            : item?.details}
+          {((i18n.language === "en" &&
+            item.enDetails &&
+            item.enDetails !== "undefined") ||
+            (i18n.language !== "en" &&
+              item.details &&
+              item.details !== "undefined")) &&
+            (i18n.language === "en"
+              ? item.enDetails?.length > 70
+                ? `${item.enDetails?.slice(0, 70)}...`
+                : item?.enDetails
+              : item.details?.length > 70
+              ? `${item.details?.slice(0, 70)}...`
+              : item?.details)}
         </p>
 
         <div className="flex justify-between items-center w-full">

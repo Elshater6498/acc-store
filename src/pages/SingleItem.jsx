@@ -167,7 +167,13 @@ const SingleItem = () => {
               </Swiper>
             )}
             <h2 className="text-2xl text-main dark:text-white">
-              {i18n.language === "en" ? data?.data?.enName : data?.data?.name}
+              {i18n.language === "en"
+                ? data?.data?.enName && data?.data?.enName !== "undefined"
+                  ? data?.data?.enName
+                  : ""
+                : data?.data?.name && data?.data?.name !== "undefined"
+                ? data?.data?.name
+                : ""}
             </h2>
             <div className="flex items-center gap-2 px-4 text-base font-semibold w-fit mx-auto rounded-full text-white bg-main">
               <span className="line-through text-gray-600">
@@ -178,11 +184,18 @@ const SingleItem = () => {
                 {data?.data?.purchasePrice} {t("singleProduct:currency")}
               </span>
             </div>
-            <p className="text-gray-700 dark:text-gray-200 text-base">
-              {i18n.language === "en"
-                ? data?.data?.enDetails
-                : data?.data?.details}
-            </p>
+            {((i18n.language === "en" &&
+              data?.data?.enDetails &&
+              data?.data?.enDetails !== "undefined") ||
+              (i18n.language !== "en" &&
+                data?.data?.details &&
+                data?.data?.details !== "undefined")) && (
+              <p className="text-gray-700 dark:text-gray-200 text-base">
+                {i18n.language === "en"
+                  ? data?.data?.enDetails
+                  : data?.data?.details}
+              </p>
+            )}
             <div className="flex flex-col gap-2">
               <h4 className="text-lg text-main bg-[#f3f4f6] py-1 rounded-full w-full text-center dark:bg-gray-900 dark:text-white">
                 {t("singleProduct:quantity")}

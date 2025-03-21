@@ -73,7 +73,12 @@ const CartItem = ({ item, done = false }) => {
           </div>
         </div>
         <div className="w-full relative col-span-8 sm:col-span-9 space-y-1 px-2 flex flex-col justify-between">
-          {(item.name || item.en_name) && (
+          {((i18n.language === "en" &&
+            item.en_name &&
+            item.en_name !== "undefined") ||
+            (i18n.language !== "en" &&
+              item.name &&
+              item.name !== "undefined")) && (
             <div className="mt-2 text-sm text-main font-semibold dark:text-white">
               {i18n.language === "en"
                 ? item.en_name?.length > 30
@@ -84,8 +89,13 @@ const CartItem = ({ item, done = false }) => {
                 : item?.name}
             </div>
           )}
-          {(item.details || item.en_details) && (
-            <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1">
+            {((i18n.language === "en" &&
+              item.en_details &&
+              item.en_details !== "undefined") ||
+              (i18n.language !== "en" &&
+                item.details &&
+                item.details !== "undefined")) && (
               <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">
                 {i18n.language === "en"
                   ? item.en_details?.length > 30
@@ -95,8 +105,8 @@ const CartItem = ({ item, done = false }) => {
                   ? `${item.details?.slice(0, 30)}...`
                   : item?.details}
               </p>
-            </div>
-          )}
+            )}
+          </div>
 
           <div className="flex flex-col md:flex-row justify-start items-start md:justify-between py-2 md:items-center w-full">
             <div className="flex items-center justify-center gap-2 dark:text-white select-none">
