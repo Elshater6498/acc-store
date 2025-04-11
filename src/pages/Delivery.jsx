@@ -78,7 +78,7 @@ const Delivery = () => {
       0
     );
 
-    if (totalOfSelling < 1) toast.warning(t("toast:minimumCost"));
+    if (totalOfPurchase < 1) toast.warning(t("toast:minimumCost"));
     else {
       const orderData = {
         customer: {
