@@ -1,6 +1,6 @@
 export const ar = {
   toast: {
-    minimumCost: "الحد الأدنى للتوصيل هو 1 ريال سعودي",
+    minimumCost: "الحد الأدنى للتوصيل هو 1 جنيه",
     orderAccepted: "تم تأكيد الطلب بنجاح",
     restaurantClose: "المطعم مغلق, حاول مرة أخري خلال مواعيد العمل",
     error: "حدث خطأ حاول مرة أخري",

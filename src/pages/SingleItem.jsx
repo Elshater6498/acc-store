@@ -21,6 +21,7 @@ const SingleItem = () => {
   const { data, isPending: isLoading } = isOffer
     ? useOffer(offerId)
     : useProduct(productId);
+  console.log("data", data);
   const [quantity, setQuantity] = useState(1);
   const { addToCart, storeData } = useGlobalContext();
   const { t, i18n } = useTranslation();
@@ -227,12 +228,8 @@ const SingleItem = () => {
             {data ? (
               <span className="text-md font-semibold whitespace-nowrap">
                 {data?.data?.itemDiscount && data?.data?.itemDiscount > 0
-                  ? Math.round(
-                      data?.data?.itemPrice *
-                        (1 - data?.data?.itemDiscount / 100) *
-                        quantity
-                    )
-                  : data?.data?.sellingPrice * quantity}{" "}
+                  ? data?.data?.purchasePrice * quantity
+                  : data?.data?.itemPrice * quantity}{" "}
                 {t("singleProduct:currency")}
               </span>
             ) : null}
