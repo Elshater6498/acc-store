@@ -40,7 +40,7 @@ const Delivery = () => {
     const time = `${hours}:${minutes} ${ampm}`;
 
     const orderTotal = cartData
-      .reduce((acc, item) => acc + item.sellingPrice, 0)
+      .reduce((acc, item) => acc + item.purchasePrice, 0)
       .toLocaleString("en-US");
 
     const message = `%0A%2A نوع الطلب %2A%3A توصيل للصيدلية %0A%2A اسم العميل %2A%3A ${
