@@ -50,9 +50,9 @@ const CartItem = ({ item, done = false }) => {
       <div className="relative w-full h-28 rounded-lg grid grid-cols-12 gap-2 cursor-pointer bg-gray-100 dark:bg-gray-900">
         {item.itemDiscount && item.itemDiscount > 0 && (
           <div
-            className={`absolute top-3 ${
-              i18n.language === "en" ? "right-1" : "left-1"
-            } bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md transform -rotate-12 z-10`}
+            className={`absolute top-5 ${
+              i18n.language === "en" ? "-right-1" : "-left-1"
+            } bg-red-500 opacity-60 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md transform -rotate-12 z-10`}
           >
             - {item.itemDiscount}%
           </div>

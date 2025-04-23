@@ -26,9 +26,9 @@ const Item = ({ item, displayOnly = false, onAddToCart }) => {
     >
       {item.itemDiscount && item.itemDiscount > 0 && (
         <div
-          className={`absolute top-1 ${
-            i18n.language === "en" ? "right-1" : "left-1"
-          } bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md transform -rotate-12 z-10`}
+          className={`absolute -top-1 ${
+            i18n.language === "en" ? "-right-1" : "-left-1"
+          } bg-red-500 opacity-60 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md transform -rotate-12 z-10`}
         >
           - {item.itemDiscount}%
         </div>
