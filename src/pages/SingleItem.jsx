@@ -182,7 +182,7 @@ const SingleItem = () => {
               </span>
               <span>{t("singleProduct:afterDiscount")}</span>
               <span className="">
-                {data?.data?.purchasePrice} {t("singleProduct:currency")}
+                {data?.data?.purchasePrice.toFixed(2)} {t("singleProduct:currency")}
               </span>
             </div>
             {((i18n.language === "en" &&
@@ -228,8 +228,8 @@ const SingleItem = () => {
             {data ? (
               <span className="text-md font-semibold whitespace-nowrap">
                 {data?.data?.itemDiscount && data?.data?.itemDiscount > 0
-                  ? data?.data?.purchasePrice * quantity
-                  : data?.data?.itemPrice * quantity}{" "}
+                  ? data?.data?.purchasePrice.toFixed(2) * quantity
+                  : data?.data?.itemPrice.toFixed(2) * quantity}{" "}
                 {t("singleProduct:currency")}
               </span>
             ) : null}

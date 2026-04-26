@@ -94,7 +94,7 @@ const CartPage = () => {
               {t("singleProduct:afterDiscount")}
               <div className="flex items-center font-semibold gap-1">
                 <span className="text-main dark:text-white text-lg font-semibold">
-                  {cartData.reduce((acc, item) => acc + item.purchasePrice, 0)}
+                  {cartData.reduce((acc, item) => acc + item.purchasePrice, 0).toFixed(2)}
                 </span>
                 {t("singleProduct:currency")}
               </div>

@@ -130,7 +130,7 @@ const CartItem = ({ item, done = false }) => {
               </span>
               <span>{t("singleProduct:afterDiscount")}</span>
               <span className="">
-                {item.purchasePrice} {t("singleProduct:currency")}
+                {item.purchasePrice.toFixed(2)} {t("singleProduct:currency")}
               </span>
             </div>
             {!done && (
