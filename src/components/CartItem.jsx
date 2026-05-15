@@ -48,7 +48,7 @@ const CartItem = ({ item, done = false }) => {
   return (
     <div className={`w-full ${done ? "pointer-events-none" : ""}`}>
       <div className="relative w-full h-28 rounded-lg grid grid-cols-12 gap-2 cursor-pointer bg-gray-100 dark:bg-gray-900">
-        {item.itemDiscount && item.itemDiscount > 0 && (
+        {/* {item.itemDiscount && item.itemDiscount > 0 && (
           <div
             className={`absolute top-5 ${
               i18n.language === "en" ? "-right-1" : "-left-1"
@@ -56,7 +56,7 @@ const CartItem = ({ item, done = false }) => {
           >
             - {item.itemDiscount}%
           </div>
-        )}
+        )} */}
         <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
           <div>
             <img
@@ -65,8 +65,8 @@ const CartItem = ({ item, done = false }) => {
                 Array.isArray(item.images) && item.images.length > 0
                   ? BASE_URL_Img + item.images[item.images.length - 1]?.path
                   : typeof item.images === "string"
-                  ? BASE_URL_Img + item.images
-                  : "/logo.jpg"
+                    ? BASE_URL_Img + item.images
+                    : "/logo.jpg"
               }
               alt={i18n.language === "en" ? item.en_name : item.name}
             />
@@ -79,16 +79,16 @@ const CartItem = ({ item, done = false }) => {
             (i18n.language !== "en" &&
               item.name &&
               item.name !== "undefined")) && (
-            <div className="mt-2 text-sm text-main font-semibold dark:text-white">
-              {i18n.language === "en"
-                ? item.en_name?.length > 30
-                  ? `${item.en_name?.slice(0, 25)}...`
-                  : item?.en_name
-                : item.name?.length > 30
-                ? `${item.name?.slice(0, 25)}...`
-                : item?.name}
-            </div>
-          )}
+              <div className="mt-2 text-sm text-main font-semibold dark:text-white">
+                {i18n.language === "en"
+                  ? item.en_name?.length > 30
+                    ? `${item.en_name?.slice(0, 25)}...`
+                    : item?.en_name
+                  : item.name?.length > 30
+                    ? `${item.name?.slice(0, 25)}...`
+                    : item?.name}
+              </div>
+            )}
           <div className="flex flex-col gap-1">
             {((i18n.language === "en" &&
               item.en_details &&
@@ -96,26 +96,25 @@ const CartItem = ({ item, done = false }) => {
               (i18n.language !== "en" &&
                 item.details &&
                 item.details !== "undefined")) && (
-              <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">
-                {i18n.language === "en"
-                  ? item.en_details?.length > 30
-                    ? `${item.en_details?.slice(0, 30)}...`
-                    : item?.en_details
-                  : item.details?.length > 30
-                  ? `${item.details?.slice(0, 30)}...`
-                  : item?.details}
-              </p>
-            )}
+                <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">
+                  {i18n.language === "en"
+                    ? item.en_details?.length > 30
+                      ? `${item.en_details?.slice(0, 30)}...`
+                      : item?.en_details
+                    : item.details?.length > 30
+                      ? `${item.details?.slice(0, 30)}...`
+                      : item?.details}
+                </p>
+              )}
           </div>
 
           <div className="flex flex-col md:flex-row justify-start items-start md:justify-between py-2 md:items-center w-full">
             <div className="flex items-center justify-center gap-2 dark:text-white select-none">
               <IoRemoveCircleOutline
-                className={`text-2xl md:text-3xl ${
-                  item.quantity === 1
-                    ? "text-[#0000004d] dark:text-[#9ca3af]"
-                    : "text-main"
-                } cursor-pointer selected-none`}
+                className={`text-2xl md:text-3xl ${item.quantity === 1
+                  ? "text-[#0000004d] dark:text-[#9ca3af]"
+                  : "text-main"
+                  } cursor-pointer selected-none`}
                 onClick={remove}
               />
               <span>{item.quantity}</span>
@@ -125,19 +124,18 @@ const CartItem = ({ item, done = false }) => {
               />
             </div>
             <div className="flex justify-end items-center w-full dark:text-white gap-2 text-xs font-semibold">
-              <span className="line-through">
+              <span>
                 {item.itemPrice} {t("singleProduct:currency")}
               </span>
-              <span>{t("singleProduct:afterDiscount")}</span>
+              {/* <span>{t("singleProduct:afterDiscount")}</span>
               <span className="">
                 {item.purchasePrice.toFixed(2)} {t("singleProduct:currency")}
-              </span>
+              </span> */}
             </div>
             {!done && (
               <FiX
-                className={`w-5 absolute -top-2 h-5 p-0.5 rounded-full bg-red-600 text-gray-50 hover:bg-opacity-100 opacity-80 dark:bg-red-600 dark:text-gray-50 block transform hover:rotate-180 cursor-pointer transition duration-300 ease ${
-                  i18n.language === "en" ? "-right-2" : "-left-2"
-                }`}
+                className={`w-5 absolute -top-2 h-5 p-0.5 rounded-full bg-red-600 text-gray-50 hover:bg-opacity-100 opacity-80 dark:bg-red-600 dark:text-gray-50 block transform hover:rotate-180 cursor-pointer transition duration-300 ease ${i18n.language === "en" ? "-right-2" : "-left-2"
+                  }`}
                 onClick={() => removeItem(item)}
               />
             )}
