@@ -20,10 +20,11 @@ const Item = ({ item, displayOnly = false, onAddToCart }) => {
     <Link
       to={`/products/${item._id}`}
       dir={i18n.language === "en" ? "ltr" : "rtl"}
-      className={`relative w-full h-28 rounded-lg grid grid-cols-12 gap-2 cursor-pointer bg-gray-100 dark:bg-gray-900 ${displayOnly ? "pointer-events-none" : ""
-        }`}
+      className={`relative w-full h-28 rounded-lg grid grid-cols-12 gap-2 cursor-pointer bg-gray-100 dark:bg-gray-900 ${
+        displayOnly ? "pointer-events-none" : ""
+      }`}
     >
-      {/* {item.itemDiscount && item.itemDiscount > 0 && (
+      {item.itemDiscount && item.itemDiscount > 0 && (
         <div
           className={`absolute -top-1 ${
             i18n.language === "en" ? "-right-1" : "-left-1"
@@ -31,7 +32,7 @@ const Item = ({ item, displayOnly = false, onAddToCart }) => {
         >
           - {item.itemDiscount}%
         </div>
-      )} */}
+      )}
       <div className="relative w-full rounded-lg col-span-4 sm:col-span-3 flex items-center justify-center">
         <div>
           <img
@@ -40,16 +41,16 @@ const Item = ({ item, displayOnly = false, onAddToCart }) => {
               item.images.length === 0
                 ? "/logo.jpg"
                 : displayOnly
-                  ? item.images[item.images.length - 1]?.path
-                    ? BASE_URL_Img + item.images[item.images.length - 1]?.path
-                    : storeData?.image
-                      ? BASE_URL_Img + storeData?.image
-                      : "/logo.jpg"
-                  : item.images[item.images.length - 1]?.path
-                    ? BASE_URL_Img + item.images[item.images.length - 1]?.path
-                    : storeData?.image
-                      ? BASE_URL_Img + storeData?.image
-                      : "/logo.jpg"
+                ? item.images[item.images.length - 1]?.path
+                  ? BASE_URL_Img + item.images[item.images.length - 1]?.path
+                  : storeData?.image
+                  ? BASE_URL_Img + storeData?.image
+                  : "/logo.jpg"
+                : item.images[item.images.length - 1]?.path
+                ? BASE_URL_Img + item.images[item.images.length - 1]?.path
+                : storeData?.image
+                ? BASE_URL_Img + storeData?.image
+                : "/logo.jpg"
             }
             alt="item img"
           />
@@ -64,10 +65,10 @@ const Item = ({ item, displayOnly = false, onAddToCart }) => {
                 : item?.enName
               : ""
             : item.name && item.name !== "undefined"
-              ? item.name?.length > 50
-                ? `${item.name?.slice(0, 50)}...`
-                : item?.name
-              : ""}
+            ? item.name?.length > 50
+              ? `${item.name?.slice(0, 50)}...`
+              : item?.name
+            : ""}
         </h3>
         <p className="text-xs text-gray-800 dark:text-gray-400 overflow-hidden">
           {((i18n.language === "en" &&
@@ -81,8 +82,8 @@ const Item = ({ item, displayOnly = false, onAddToCart }) => {
                 ? `${item.enDetails?.slice(0, 70)}...`
                 : item?.enDetails
               : item.details?.length > 70
-                ? `${item.details?.slice(0, 70)}...`
-                : item?.details)}
+              ? `${item.details?.slice(0, 70)}...`
+              : item?.details)}
         </p>
 
         <div className="flex justify-between items-center w-full">
@@ -92,13 +93,13 @@ const Item = ({ item, displayOnly = false, onAddToCart }) => {
             onClick={handleAddToCart}
           />
           <div className="flex items-center dark:text-white gap-2 text-xs font-semibold">
-            <span>
+            <span className="line-through">
               {item.itemPrice} {t("singleProduct:currency")}
             </span>
-            {/* <span>{t("singleProduct:afterDiscount")}</span>
+            <span>{t("singleProduct:afterDiscount")}</span>
             <span className="">
               {item.purchasePrice.toFixed(2)} {t("singleProduct:currency")}
-            </span> */}
+            </span>
           </div>
         </div>
       </div>

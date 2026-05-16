@@ -21,6 +21,7 @@ const SingleItem = () => {
   const { data, isPending: isLoading } = isOffer
     ? useOffer(offerId)
     : useProduct(productId);
+  console.log("data", data);
   const [quantity, setQuantity] = useState(1);
   const { addToCart, storeData } = useGlobalContext();
   const { t, i18n } = useTranslation();
@@ -50,8 +51,9 @@ const SingleItem = () => {
         <div className="col-span-9 grid grid-cols-12 justify-start items-center">
           <Link
             to="/"
-            className={`col-span-10 pr-4 text-md font-semibold text-gray-500 dark:text-white overflow-y-hidden flex items-center cursor-pointer gap-2  ${i18n.language === "en" ? "pl-4" : "pr-4"
-              }`}
+            className={`col-span-10 pr-4 text-md font-semibold text-gray-500 dark:text-white overflow-y-hidden flex items-center cursor-pointer gap-2  ${
+              i18n.language === "en" ? "pl-4" : "pr-4"
+            }`}
           >
             <img
               src={
@@ -72,8 +74,9 @@ const SingleItem = () => {
           </Link>
         </div>
         <IoIosArrowBack
-          className={`w-10 h-10 rounded-full text-main hover:bg-main hover:text-white dark:text-white transition p-2 cursor-pointer ${i18n.language === "en" ? "mr-4 rotate-180" : "ml-4"
-            }`}
+          className={`w-10 h-10 rounded-full text-main hover:bg-main hover:text-white dark:text-white transition p-2 cursor-pointer ${
+            i18n.language === "en" ? "mr-4 rotate-180" : "ml-4"
+          }`}
           title="رجوع"
           onClick={() => navigate(-1)}
         />
@@ -96,8 +99,9 @@ const SingleItem = () => {
                 />
                 {data?.data?.itemDiscount && data?.data?.itemDiscount > 0 && (
                   <div
-                    className={`absolute top-2 ${i18n.language === "en" ? "left-2" : "right-2"
-                      } bg-red-500 text-white text-sm font-bold px-3 py-1.5 rounded-md shadow-md transform -rotate-12 z-10`}
+                    className={`absolute top-2 ${
+                      i18n.language === "en" ? "left-2" : "right-2"
+                    } bg-red-500 text-white text-sm font-bold px-3 py-1.5 rounded-md shadow-md transform -rotate-12 z-10`}
                   >
                     - {data?.data?.itemDiscount}%
                   </div>
@@ -122,7 +126,7 @@ const SingleItem = () => {
                 modules={[Autoplay, Pagination, Navigation]}
                 className="mySwiper !rounded-lg relative"
               >
-                {/* {data?.data?.itemDiscount && data?.data?.itemDiscount > 0 && (
+                {data?.data?.itemDiscount && data?.data?.itemDiscount > 0 && (
                   <div
                     className={`absolute top-2 ${
                       i18n.language === "en" ? "left-2" : "right-2"
@@ -130,7 +134,7 @@ const SingleItem = () => {
                   >
                     - {data?.data?.itemDiscount}%
                   </div>
-                )} */}
+                )}
                 {data?.data?.images && data?.data?.images.length > 0 ? (
                   data?.data?.images
                     ?.slice()
@@ -169,17 +173,17 @@ const SingleItem = () => {
                   ? data?.data?.enName
                   : ""
                 : data?.data?.name && data?.data?.name !== "undefined"
-                  ? data?.data?.name
-                  : ""}
+                ? data?.data?.name
+                : ""}
             </h2>
             <div className="flex items-center gap-2 px-4 text-base font-semibold w-fit mx-auto rounded-full text-white bg-main">
-              <span className="text-gray-600">
+              <span className="line-through text-gray-600">
                 {data?.data?.itemPrice} {t("singleProduct:currency")}
               </span>
-              {/* <span>{t("singleProduct:afterDiscount")}</span>
+              <span>{t("singleProduct:afterDiscount")}</span>
               <span className="">
                 {data?.data?.purchasePrice.toFixed(2)} {t("singleProduct:currency")}
-              </span> */}
+              </span>
             </div>
             {((i18n.language === "en" &&
               data?.data?.enDetails &&
@@ -187,22 +191,23 @@ const SingleItem = () => {
               (i18n.language !== "en" &&
                 data?.data?.details &&
                 data?.data?.details !== "undefined")) && (
-                <p className="text-gray-700 dark:text-gray-200 text-base">
-                  {i18n.language === "en"
-                    ? data?.data?.enDetails
-                    : data?.data?.details}
-                </p>
-              )}
+              <p className="text-gray-700 dark:text-gray-200 text-base">
+                {i18n.language === "en"
+                  ? data?.data?.enDetails
+                  : data?.data?.details}
+              </p>
+            )}
             <div className="flex flex-col gap-2">
               <h4 className="text-lg text-main bg-[#f3f4f6] py-1 rounded-full w-full text-center dark:bg-gray-900 dark:text-white">
                 {t("singleProduct:quantity")}
               </h4>
               <div className="flex items-center justify-center gap-4 select-none">
                 <IoRemoveCircleOutline
-                  className={`text-4xl ${quantity === 1
-                    ? "text-[#0000004d] dark:text-[#9ca3af]"
-                    : "text-main"
-                    } cursor-pointer selected-none`}
+                  className={`text-4xl ${
+                    quantity === 1
+                      ? "text-[#0000004d] dark:text-[#9ca3af]"
+                      : "text-main"
+                  } cursor-pointer selected-none`}
                   onClick={remove}
                 />
                 <span className="text-xl">{quantity}</span>
@@ -222,7 +227,9 @@ const SingleItem = () => {
             </span>
             {data ? (
               <span className="text-md font-semibold whitespace-nowrap">
-                {data?.data?.itemPrice.toFixed(2) * quantity}{" "}
+                {data?.data?.itemDiscount && data?.data?.itemDiscount > 0
+                  ? data?.data?.purchasePrice.toFixed(2) * quantity
+                  : data?.data?.itemPrice.toFixed(2) * quantity}{" "}
                 {t("singleProduct:currency")}
               </span>
             ) : null}
