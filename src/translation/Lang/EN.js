@@ -53,10 +53,10 @@ export const en = {
     afterDiscount: "After Discount",
   },
   customerData: {
-    name: "Pharmacy Name",
+    name: "Client Name",
     address: "Address",
     PhoneNumber: "Phone Number",
-    delivery: "Delivery to the pharmacy",
+    delivery: "Delivery to the Client",
     branchReceipt: "from the branch",
     deliveryFees: "fees are determined by branch",
     freeDelivery: "Free delivery",

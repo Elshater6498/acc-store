@@ -31,9 +31,8 @@ const Options = () => {
         <div className="col-span-9 grid grid-cols-12 justify-start items-center">
           <Link
             to="/"
-            className={`col-span-10 pr-4 text-md font-semibold text-gray-500 dark:text-white overflow-y-hidden flex items-center cursor-pointer gap-2  ${
-              i18n.language === "en" ? "pl-4" : "pr-4"
-            }`}
+            className={`col-span-10 pr-4 text-md font-semibold text-gray-500 dark:text-white overflow-y-hidden flex items-center cursor-pointer gap-2  ${i18n.language === "en" ? "pl-4" : "pr-4"
+              }`}
           >
             <img
               src={
@@ -54,9 +53,8 @@ const Options = () => {
           </Link>
         </div>
         <IoIosArrowBack
-          className={`w-10 h-10 rounded-full text-main hover:bg-main hover:text-white dark:text-white transition p-2 cursor-pointer ${
-            i18n.language === "en" ? "mr-4 rotate-180" : "ml-4"
-          }`}
+          className={`w-10 h-10 rounded-full text-main hover:bg-main hover:text-white dark:text-white transition p-2 cursor-pointer ${i18n.language === "en" ? "mr-4 rotate-180" : "ml-4"
+            }`}
           title="رجوع"
           onClick={() => navigate(-1)}
         />
@@ -86,17 +84,16 @@ const Options = () => {
                 })}
               />
               <label
-                className={`peer-checked:border-main peer-checked:bg-main text-gray-700 peer-checked:text-white flex flex-col dark:text-white items-center justify-center gap-3 border p-2 w-44 h-28 rounded-md ${
-                  errors.delivery ? "border-red-500" : "border-gray-400"
-                }`}
+                className={`peer-checked:border-main peer-checked:bg-main text-gray-700 peer-checked:text-white flex flex-col dark:text-white items-center justify-center gap-3 border p-2 w-44 h-28 rounded-md ${errors.delivery ? "border-red-500" : "border-gray-400"
+                  }`}
                 htmlFor={options.DELIVER_HOME}
               >
                 <BsBagCheck className="text-5xl" />
                 <span className="text-sm">{t("customerData:delivery")}</span>
               </label>
-              <span className="text-xs text-gray-700 dark:text-white">
+              {/* <span className="text-xs text-gray-700 dark:text-white">
                 {t("customerData:freeDelivery")}
-              </span>
+              </span> */}
             </div>
           </div>
         </div>

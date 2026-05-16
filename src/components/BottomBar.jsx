@@ -5,7 +5,6 @@ import { useGlobalContext } from "../context";
 
 const BottomBar = () => {
   const { cartData } = useGlobalContext();
-  console.log("cartData", cartData);
   const { t } = useTranslation();
   return (
     <Link

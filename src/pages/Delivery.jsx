@@ -43,21 +43,53 @@ const Delivery = () => {
       .reduce((acc, item) => acc + item.purchasePrice, 0)
       .toLocaleString("en-US");
 
-    const message = `%0A%2A نوع الطلب %2A%3A توصيل للصيدلية %0A%2A اسم العميل %2A%3A ${
-      data.name
-    } %0A%2A رقم العميل %2A%3A ${data.phone} %0A%2A عنوان العميل %2A%3A ${
-      data.address
-    } %0A---------------------------%0A${cartData
-      .map((item) => {
-        return `%2A الصنف %2A%3A ${item.name} %0A%2A الكمية %2A%3A ${item.quantity} %0A%2A السعر %2A%3A ${item.itemPrice} جنيه %0A%2A نسبة الخصم %2A%3A ${item.itemDiscount} %0A%2A بعد الخصم %2A%3A ${item.purchasePrice} جنيه`;
-      })
-      .join(
-        "%0A---------------------------%0A"
-      )}%0A---------------------------%0A%2A مبلغ الطلب %2A%3A ${total} جنيه %0A%2A المجموع بعد الخصم %2A%3A ${orderTotal} جنيه %0A%2A وقت الطلب %2A%3A ${time}`;
+    const message = `%0A%2A نوع الطلب %2A%3A توصيل للعميل %0A%2A اسم العميل %2A%3A ${data.name
+      } %0A%2A رقم العميل %2A%3A ${data.phone} %0A%2A عنوان العميل %2A%3A ${data.address
+      } %0A---------------------------%0A${cartData
+        .map((item) => {
+          return `%2A الصنف %2A%3A ${item.name} %0A%2A الكمية %2A%3A ${item.quantity} %0A%2A السعر %2A%3A ${item.itemPrice} جنيه %0A%2A نسبة الخصم %2A%3A ${item.itemDiscount} %0A%2A بعد الخصم %2A%3A ${item.purchasePrice} جنيه`;
+        })
+        .join(
+          "%0A---------------------------%0A"
+        )}%0A---------------------------%0A%2A مبلغ الطلب %2A%3A ${total} جنيه %0A%2A المجموع بعد الخصم %2A%3A ${orderTotal} جنيه %0A%2A وقت الطلب %2A%3A ${time}`;
 
-    window.open(
-      `https://api.whatsapp.com/send?phone=${storeData?.whatsapp}&text=${message}`
-    );
+    // Use selected branch WhatsApp number instead of store WhatsApp
+    const whatsappNumber =
+      storeData?.whatsapp?.replace(/[^0-9]/g, "") ||
+      storeData?.whatsapp;
+
+    // Detect device type for better WhatsApp compatibility
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isAndroid = /Android/.test(navigator.userAgent);
+    const isMobile = isIOS || isAndroid;
+
+    let whatsappUrl;
+
+    if (isIOS) {
+      // For iOS devices, try the app scheme first, then fall back to web
+      whatsappUrl = `whatsapp://send?phone=${whatsappNumber}&text=${message}`;
+
+      // Try to open the app, if it fails, fall back to web
+      const link = document.createElement("a");
+      link.href = whatsappUrl;
+      link.click();
+
+      // Fallback to web version after a short delay if app doesn't open
+      setTimeout(() => {
+        window.open(
+          `https://wa.me/${whatsappNumber}?text=${message}`,
+          "_blank"
+        );
+      }, 500);
+    } else if (isAndroid) {
+      // For Android, use the intent URL which works better
+      whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+      window.open(whatsappUrl, "_blank");
+    } else {
+      // For desktop/other devices, use WhatsApp Web
+      whatsappUrl = `https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${message}`;
+      window.open(whatsappUrl, "_blank");
+    }
   };
 
   const onSubmit = async (data) => {
@@ -96,14 +128,12 @@ const Delivery = () => {
 
       // if (searchParams.get("option") === options.TAKEAWAY)
       //   delete orderData.customer.address;
-      // console.log("order_details", orderData);
       try {
         const response = await axios.post(`${BASE_URL}/order`, orderData, {
           headers: {
             "Content-Type": "application/json",
           },
         });
-        console.log("response", response);
         localStorage.setItem("order_num", response.data?.data?._id);
         toast.success(t("toast:orderAccepted"));
         onSubmitToWhatsApp(data);
@@ -115,7 +145,6 @@ const Delivery = () => {
         //   `/order-details/${response.data?.data?._id}?option=${options.DELIVER_HOME}`
         // );
       } catch (error) {
-        console.log(error);
         toast.error(t("toast:error"));
       }
     }
@@ -127,9 +156,8 @@ const Delivery = () => {
         <div className="col-span-9 grid grid-cols-12 justify-start items-center">
           <Link
             to="/"
-            className={`col-span-10 pr-4 text-md font-semibold text-gray-500 dark:text-white overflow-y-hidden flex items-center cursor-pointer gap-2  ${
-              i18n.language === "en" ? "pl-4" : "pr-4"
-            }`}
+            className={`col-span-10 pr-4 text-md font-semibold text-gray-500 dark:text-white overflow-y-hidden flex items-center cursor-pointer gap-2  ${i18n.language === "en" ? "pl-4" : "pr-4"
+              }`}
           >
             <img
               src={
@@ -150,9 +178,8 @@ const Delivery = () => {
           </Link>
         </div>
         <IoIosArrowBack
-          className={`w-10 h-10 rounded-full text-main hover:bg-main hover:text-white dark:text-white transition p-2 cursor-pointer ${
-            i18n.language === "en" ? "mr-4 rotate-180" : "ml-4"
-          }`}
+          className={`w-10 h-10 rounded-full text-main hover:bg-main hover:text-white dark:text-white transition p-2 cursor-pointer ${i18n.language === "en" ? "mr-4 rotate-180" : "ml-4"
+            }`}
           title="رجوع"
           onClick={() => navigate(-1)}
         />
@@ -164,9 +191,8 @@ const Delivery = () => {
         <div className="flex flex-col">
           <label
             htmlFor="name"
-            className={`relative block overflow-hidden border-b border-gray-200 bg-transparent pt-3 focus-within:border-main ${
-              errors.name ? "border-red-500" : ""
-            }`}
+            className={`relative block overflow-hidden border-b border-gray-200 bg-transparent pt-3 focus-within:border-main ${errors.name ? "border-red-500" : ""
+              }`}
           >
             <input
               type="text"
@@ -179,9 +205,8 @@ const Delivery = () => {
               })}
             />
             <BsPerson
-              className={`absolute top-1/2 -translate-y-1/2 text-gray-400 text-lg peer-focus:text-main ${
-                errors.name ? "text-red-500" : ""
-              } ${i18n.language === "en" ? "left-0" : "right-0"}`}
+              className={`absolute top-1/2 -translate-y-1/2 text-gray-400 text-lg peer-focus:text-main ${errors.name ? "text-red-500" : ""
+                } ${i18n.language === "en" ? "left-0" : "right-0"}`}
             />
             <span className="absolute start-6 top-2 -translate-y-1/2 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs dark:text-white">
               {t("customerData:name")}
@@ -196,9 +221,8 @@ const Delivery = () => {
         <div className="flex flex-col">
           <label
             htmlFor="address"
-            className={`relative block overflow-hidden border-b border-gray-200 bg-transparent pt-3 focus-within:border-main ${
-              errors.address ? "border-red-500" : ""
-            }`}
+            className={`relative block overflow-hidden border-b border-gray-200 bg-transparent pt-3 focus-within:border-main ${errors.address ? "border-red-500" : ""
+              }`}
           >
             <input
               type="text"
@@ -210,9 +234,8 @@ const Delivery = () => {
               })}
             />
             <BsGeoAlt
-              className={`absolute top-1/2 -translate-y-1/2 text-gray-400 text-lg peer-focus:text-main ${
-                errors.address ? "text-red-500" : ""
-              } ${i18n.language === "en" ? "left-0" : "right-0"}`}
+              className={`absolute top-1/2 -translate-y-1/2 text-gray-400 text-lg peer-focus:text-main ${errors.address ? "text-red-500" : ""
+                } ${i18n.language === "en" ? "left-0" : "right-0"}`}
             />
             <span className="absolute start-6 top-2 -translate-y-1/2 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs dark:text-white">
               {t("customerData:address")}
@@ -227,9 +250,8 @@ const Delivery = () => {
         <div className="flex flex-col">
           <label
             htmlFor="phone"
-            className={`relative block overflow-hidden border-b border-gray-200 bg-transparent pt-3 focus-within:border-main ${
-              errors.phone ? "border-red-500" : ""
-            }`}
+            className={`relative block overflow-hidden border-b border-gray-200 bg-transparent pt-3 focus-within:border-main ${errors.phone ? "border-red-500" : ""
+              }`}
           >
             <input
               type="text"
@@ -246,9 +268,8 @@ const Delivery = () => {
               className="peer h-8 w-full border-none dark:text-white bg-transparent py-0 px-6 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
             />
             <BsPhone
-              className={`absolute top-1/2 -translate-y-1/2 text-gray-400 text-lg peer-focus:text-main ${
-                errors.phone ? "text-red-500" : ""
-              } ${i18n.language === "en" ? "left-0" : "right-0"}`}
+              className={`absolute top-1/2 -translate-y-1/2 text-gray-400 text-lg peer-focus:text-main ${errors.phone ? "text-red-500" : ""
+                } ${i18n.language === "en" ? "left-0" : "right-0"}`}
             />
             <span className="absolute start-6 top-2 -translate-y-1/2 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs dark:text-white">
               {t("customerData:PhoneNumber")}
